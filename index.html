@@ -2,24 +2,51 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ApeiroCreate v1.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b0e14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>ApeiroCreate v1.0.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;600;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Roboto+Mono:wght@400;500&family=JetBrains+Mono:wght@400;600&family=Bebas+Neue&family=Lobster&display=swap" rel="stylesheet">
 <style>
-  :root{ --ink:#0b0e14; --panel:#12161f; --line:#1f2633; }
+  :root{ --ink:#0b0e14; --panel:#12161f; --line:#1f2633;
+    --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+    --sal:env(safe-area-inset-left,0px); --sar:env(safe-area-inset-right,0px);
+    --head:58px; --vh:100vh; }
+  @supports (height:100dvh){ :root{ --vh:100dvh } }
   *{ -webkit-tap-highlight-color:transparent; }
-  html,body{ height:100%; }
-  body{ font-family:'Space Grotesk',system-ui,sans-serif; background:radial-gradient(1200px 800px at 15% -10%,#1b2436 0%,#0b0e14 55%),radial-gradient(1000px 700px at 110% 110%,#101826 0%,#0b0e14 60%),#0b0e14; overflow:hidden; }
+  html,body{ height:100%; overscroll-behavior:none; }
+  body{ font-family:'Space Grotesk',system-ui,-apple-system,sans-serif; background:radial-gradient(1200px 800px at 15% -10%,#1b2436 0%,#0b0e14 55%),radial-gradient(1000px 700px at 110% 110%,#101826 0%,#0b0e14 60%),#0b0e14; overflow:hidden; }
+  input,textarea,select,button{ font-family:inherit; font-size:16px }
+  @media (pointer:fine){ input,textarea,select{ font-size:inherit } }
+  /* ---------- polished chrome ---------- */
+  .glass{ background:rgba(17,22,33,.72); backdrop-filter:blur(16px) saturate(1.4); -webkit-backdrop-filter:blur(16px) saturate(1.4) }
+  .hbtn{ display:inline-flex; align-items:center; justify-content:center; gap:7px; height:36px; padding:0 14px; border-radius:11px; font-size:12.5px; font-weight:700; color:#c7d0e0; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); transition:transform .14s cubic-bezier(.3,1.3,.5,1),background .16s,border-color .16s,color .16s; white-space:nowrap }
+  .hbtn:hover{ background:rgba(255,255,255,.11); color:#fff; border-color:rgba(255,255,255,.18) }
+  .hbtn:active{ transform:scale(.95) }
+  .hbtn.sq{ width:36px; padding:0 }
+  .hbtn.good{ color:#6ee7b7; background:rgba(16,185,129,.14); border-color:rgba(16,185,129,.35) }
+  .hbtn.good:hover{ background:rgba(16,185,129,.24) }
+  .hbtn.warn{ color:#fda4af; background:rgba(244,63,94,.12); border-color:rgba(244,63,94,.3) }
+  .hbtn.warn:hover{ background:rgba(244,63,94,.22) }
+  .hbtn.accent{ color:#1a1006; background:linear-gradient(180deg,#ffa25c,#ff8a3c); border-color:#ff8a3c; box-shadow:0 4px 14px -4px rgba(255,138,60,.6) }
+  .brandmark{ position:relative; isolation:isolate }
+  .brandmark:after{ content:''; position:absolute; inset:-6px; border-radius:16px; background:linear-gradient(135deg,#ff8a3c,#f5c542,#5b9dff); filter:blur(14px); opacity:.35; z-index:-1 }
   ::-webkit-scrollbar{ width:9px;height:9px } ::-webkit-scrollbar-thumb{ background:#2a3345;border-radius:99px;border:2px solid transparent;background-clip:content-box } ::-webkit-scrollbar-track{ background:transparent }
   .light-scroll::-webkit-scrollbar-thumb{ background:#c4cbd8;border:2px solid transparent;background-clip:content-box }
 
   /* ---------- window chrome ---------- */
   #win{ box-shadow:0 40px 120px -20px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.06); }
   #win:fullscreen{ border-radius:0!important }
-  #chrome{ background:linear-gradient(#232a38,#1a2130); border-bottom:1px solid #0d1119; }
-  .tab{ display:flex;align-items:center;gap:7px;padding:0 16px;height:38px;font-size:12.5px;font-weight:600;letter-spacing:.04em;border-radius:10px 10px 0 0;color:#8b94a7;position:relative;transition:.2s;border:1px solid transparent;border-bottom:none; }
+  #win:-webkit-full-screen{ border-radius:0!important }
+  body.faux-fs #win{ position:fixed; inset:0; z-index:500; border-radius:0!important; height:100%!important; width:100%!important }
+  body.faux-fs header,body.faux-fs .glowline{ display:none }
+  .no-scrollbar::-webkit-scrollbar{ height:0;width:0 }
+  .no-scrollbar{ scrollbar-width:none }
+  #chrome{ background:linear-gradient(180deg,#252d3d,#161c29); border-bottom:1px solid #0a0d14; box-shadow:inset 0 1px 0 rgba(255,255,255,.06); }
+  .tab{ display:flex;align-items:center;gap:7px;padding:0 13px;height:38px;font-size:12.5px;font-weight:600;letter-spacing:.04em;border-radius:10px 10px 0 0;color:#8b94a7;position:relative;transition:.2s;border:1px solid transparent;border-bottom:none;flex:none;white-space:nowrap; }
+  @media (max-width:640px){ .tab{ padding:0 10px; font-size:11.5px } }
   .tab .dot{ width:9px;height:9px;border-radius:99px;transition:.2s }
   .tab[data-tab=html] .dot{ background:#ff8a3c } .tab[data-tab=css] .dot{ background:#5b9dff } .tab[data-tab=js] .dot{ background:#f5c542 }
   .tab:hover{ color:#dfe5ef }
@@ -36,8 +63,20 @@
   body.running #ovl{ display:none }
   body.running #designTag{ display:none }
   .selbox{ position:absolute; outline:2px solid #ff8a3c; box-shadow:0 0 0 4px rgba(255,138,60,.16); pointer-events:none; z-index:5 }
-  .selbox .rsz2{ position:absolute; right:-8px; bottom:-8px; width:16px; height:16px; border-radius:4px; background:#ff8a3c; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.4); pointer-events:auto; cursor:nwse-resize }
-  .selbox .tagl{ position:absolute; left:-2px; top:-20px; height:18px; padding:0 7px; border-radius:5px; background:#ff8a3c; color:#1a1006; font:700 10px 'JetBrains Mono',monospace; display:flex; align-items:center; white-space:nowrap; pointer-events:none }
+  .selbox .rsz2{ position:absolute; right:-9px; bottom:-9px; width:18px; height:18px; border-radius:5px; background:#ff8a3c; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,.45); pointer-events:auto; cursor:nwse-resize; touch-action:none }
+  .selbox .rot2{ position:absolute; left:50%; top:-34px; transform:translateX(-50%); width:26px; height:26px; border-radius:50%; background:#5b9dff; border:2px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,.45); pointer-events:auto; cursor:grab; touch-action:none; display:flex; align-items:center; justify-content:center; color:#fff }
+  .selbox .rot2:active{ cursor:grabbing; transform:translateX(-50%) scale(1.12) }
+  .selbox .rotstem{ position:absolute; left:50%; top:-12px; width:2px; height:12px; background:#5b9dff; transform:translateX(-50%); pointer-events:none }
+  .selbox .tagl{ position:absolute; left:-2px; top:-21px; height:19px; padding:0 8px; border-radius:6px; background:#ff8a3c; color:#1a1006; font:700 10px 'JetBrains Mono',monospace; display:flex; align-items:center; white-space:nowrap; pointer-events:none; box-shadow:0 2px 6px rgba(0,0,0,.3) }
+  .selbox .angl{ position:absolute; right:-2px; top:-21px; height:19px; padding:0 7px; border-radius:6px; background:#5b9dff; color:#04121f; font:700 10px 'JetBrains Mono',monospace; display:flex; align-items:center; pointer-events:none }
+  @media (max-width:760px){
+    .menu{ width:min(94vw,360px)!important; max-height:min(70vh,560px) }
+    .igrid{ grid-template-columns:1fr }
+    .iitem{ padding:11px 12px; font-size:13.5px }
+    .mbtn{ padding:9px 11px }
+    .selbox .rsz2{ width:22px; height:22px; right:-11px; bottom:-11px }
+    .selbox .rot2{ width:30px; height:30px; top:-40px }
+  }
   .hovbox{ position:absolute; outline:1.5px dashed rgba(255,138,60,.6); pointer-events:none; z-index:4 }
   body.picking #ovl{ cursor:crosshair; background:rgba(255,138,60,.07); box-shadow:inset 0 0 0 3px rgba(255,138,60,.55) }
   .pickbtn{ flex:none; width:24px; height:22px; border-radius:6px; background:#332b12; border:1px solid #4a3f18; color:#f5c542; display:flex; align-items:center; justify-content:center; transition:.15s }
@@ -54,24 +93,58 @@
   .grow{ width:100%; display:block }
 
   /* ---------- floating menus ---------- */
-  .menubk{ position:fixed; inset:0; z-index:190; }
-  .menu{ position:fixed; z-index:200; width:330px; max-height:min(560px,82vh); display:flex; flex-direction:column; background:rgba(19,24,36,.92); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.1); border-radius:16px; box-shadow:0 30px 80px -12px rgba(0,0,0,.75); color:#dde4f0; overflow:hidden; animation:pop .18s cubic-bezier(.3,1.4,.5,1) }
-  @keyframes pop{ from{ transform:scale(.9) translateY(8px); opacity:0 } }
-  .menu-h{ display:flex; align-items:center; gap:8px; padding:11px 14px; font-weight:700; font-size:13px; letter-spacing:.05em; text-transform:uppercase; color:#fff; border-bottom:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04) }
-  .menu-b{ padding:10px 12px; overflow-y:auto }
-  .mcat{ font-size:10.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#8b94a7; margin:10px 2px 6px }
-  .igrid{ display:grid; grid-template-columns:1fr 1fr; gap:6px }
-  .iitem{ display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:10px; font-size:12.5px; font-weight:500; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.07); transition:.15s; text-align:left }
-  .iitem:hover{ background:rgba(255,138,60,.18); border-color:rgba(255,138,60,.5); transform:translateY(-1px) }
+  .menubk{ position:fixed; inset:0; z-index:190; background:rgba(4,6,11,.35); backdrop-filter:blur(2px); animation:bkin .2s ease }
+  @keyframes bkin{ from{ opacity:0 } }
+  .menu{ position:fixed; z-index:200; width:346px; max-height:min(580px,80vh); display:flex; flex-direction:column;
+    background:linear-gradient(180deg,rgba(26,32,46,.97),rgba(15,19,29,.97)); backdrop-filter:blur(22px) saturate(1.5); -webkit-backdrop-filter:blur(22px) saturate(1.5);
+    border:1px solid rgba(255,255,255,.13); border-radius:20px; color:#dde4f0; overflow:hidden;
+    box-shadow:0 40px 90px -16px rgba(0,0,0,.85), 0 0 0 1px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1);
+    animation:pop .22s cubic-bezier(.22,1.3,.4,1) }
+  @keyframes pop{ from{ transform:scale(.94) translateY(10px); opacity:0 } }
+  .menu{ will-change:transform,opacity; animation-fill-mode:both }
+  body.menu-open{ overscroll-behavior:contain }
+  .menu:before{ content:''; position:absolute; inset:0 0 auto; height:2px; background:linear-gradient(90deg,#ff8a3c,#f5c542 45%,#5b9dff); opacity:.9 }
+  .menu-h{ display:flex; align-items:center; gap:9px; padding:13px 14px 12px; font-weight:700; font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:#fff;
+    border-bottom:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.03) }
+  .menu-h>i:first-child,.menu-h>svg:first-child{ padding:0 }
+  .menu-b{ padding:12px; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain }
+  .mcat{ display:flex; align-items:center; gap:8px; font-size:9.5px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:#7c8699; margin:14px 2px 7px }
+  .mcat:after{ content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(255,255,255,.12),transparent) }
+  .igrid{ display:grid; grid-template-columns:1fr 1fr; gap:7px }
+  .iitem{ display:flex; align-items:center; gap:9px; padding:9px 11px; border-radius:12px; font-size:12.5px; font-weight:500; line-height:1.25;
+    background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035)); border:1px solid rgba(255,255,255,.08);
+    transition:transform .14s cubic-bezier(.3,1.3,.5,1),background .16s,border-color .16s,box-shadow .16s; text-align:left }
+  .iitem:hover{ background:linear-gradient(180deg,rgba(255,138,60,.26),rgba(255,138,60,.12)); border-color:rgba(255,138,60,.55); transform:translateY(-2px); box-shadow:0 8px 18px -8px rgba(255,138,60,.7) }
+  .iitem:active{ transform:translateY(0) scale(.97) }
   .iitem svg{ width:15px;height:15px; flex:none; color:#ffb37e }
-  .field{ display:flex; flex-direction:column; gap:4px }
-  .field>span{ font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#8b94a7 }
-  .inp{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:8px; padding:6px 9px; font-size:12.5px; color:#eef2fa; outline:none; transition:.15s; width:100% }
-  .inp:focus{ border-color:#ff8a3c; box-shadow:0 0 0 3px rgba(255,138,60,.2) }
-  input[type=color].inp{ padding:2px; height:30px; cursor:pointer }
-  select.inp{ appearance:none }
-  .mbtn{ display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:7px 10px; border-radius:9px; font-size:12px; font-weight:600; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); transition:.15s }
-  .mbtn:hover{ background:rgba(255,255,255,.14) }
+  .field{ display:flex; flex-direction:column; gap:5px }
+  .field>span{ font-size:9.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#7c8699 }
+  .inp{ background:rgba(6,9,16,.6); border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:7px 10px; font-size:12.5px; color:#eef2fa; outline:none; transition:.16s; width:100% }
+  .inp:hover{ border-color:rgba(255,255,255,.22) }
+  .inp:focus{ border-color:#ff8a3c; box-shadow:0 0 0 3px rgba(255,138,60,.22); background:rgba(6,9,16,.85) }
+  input[type=color].inp{ padding:2px; height:32px; cursor:pointer }
+  select.inp{ appearance:none; background-image:linear-gradient(45deg,transparent 50%,#7c8699 50%),linear-gradient(135deg,#7c8699 50%,transparent 50%); background-position:calc(100% - 14px) 14px,calc(100% - 9px) 14px; background-size:5px 5px,5px 5px; background-repeat:no-repeat; padding-right:26px }
+  .inp[type=range]{ padding:0; height:22px; background:transparent; accent-color:#ff8a3c }
+  .msec{ border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.025); border-radius:14px; padding:10px 11px 11px; margin-bottom:9px }
+  .mbtn{ display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:8px 11px; border-radius:11px; font-size:12px; font-weight:700; color:#cfd7e6;
+    background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045)); border:1px solid rgba(255,255,255,.1);
+    transition:transform .13s cubic-bezier(.3,1.3,.5,1),background .16s,border-color .16s,color .16s }
+  .mbtn:hover{ background:rgba(255,255,255,.16); color:#fff; border-color:rgba(255,255,255,.2) }
+  .mbtn:active{ transform:scale(.95) }
+  .mtabs{ display:flex; gap:4px; padding:4px; margin:12px 12px 0; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.07); border-radius:13px }
+  .mtab{ flex:1; display:flex; align-items:center; justify-content:center; gap:6px; height:32px; border-radius:10px; font-size:11.5px; font-weight:700; color:#8b94a7; transition:.16s }
+  .mtab:hover{ color:#e7edf7 }
+  .mtab.on{ background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.07)); color:#fff; box-shadow:0 2px 8px rgba(0,0,0,.35) }
+  .msearch{ position:relative; margin:10px 12px 0 }
+  .msearch input{ padding-left:32px!important; height:36px; border-radius:12px }
+  .msearch>svg,.msearch>i{ position:absolute; left:11px; top:50%; transform:translateY(-50%); color:#6f7a8d; pointer-events:none }
+  .mgrab{ display:none }
+  @media (max-width:760px){
+    .menu{ left:0!important; right:0!important; bottom:0!important; top:auto!important; width:100%!important; max-width:100%!important;
+      max-height:82vh; border-radius:22px 22px 0 0; animation:sheet .26s cubic-bezier(.2,1,.3,1); padding-bottom:var(--sab) }
+    @keyframes sheet{ from{ transform:translateY(100%) } }
+    .mgrab{ display:block; width:42px; height:4px; border-radius:99px; background:rgba(255,255,255,.28); margin:8px auto 2px }
+  }
   .mbtn.acc{ background:#ff8a3c; border-color:#ff8a3c; color:#1a1006 } .mbtn.acc:hover{ filter:brightness(1.1) }
   .mbtn.danger{ background:rgba(239,68,68,.15); border-color:rgba(239,68,68,.4); color:#fca5a5 } .mbtn.danger:hover{ background:rgba(239,68,68,.3) }
   .mbtn.on{ background:#ff8a3c; color:#1a1006; border-color:#ff8a3c }
@@ -136,8 +209,11 @@
   @keyframes pr{ 50%{ box-shadow:0 0 0 5px rgba(34,197,94,.35) } }
   .kbd{ font-size:10px; background:rgba(255,255,255,.08); padding:1px 5px; border-radius:5px; border:1px solid rgba(255,255,255,.14) }
   /* ---------- console ---------- */
-  #console{ height:0; transition:height .22s ease; background:#08090d; border-top:1px solid #1d2432; overflow:hidden; flex:none }
-  #console.open{ height:190px }
+  #console{ height:0; transition:height .24s cubic-bezier(.3,1,.4,1); background:#08090d; border-top:1px solid #1d2432; overflow:hidden; flex:none; display:flex; flex-direction:column }
+  #console.open{ height:clamp(150px, 26vh, 240px) }
+  #conBody{ flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:var(--sab) }
+  #conHead{ flex:none }
+  @media (max-height:620px){ #console.open{ height:44vh } }
   .logrow{ display:flex; gap:8px; padding:3px 12px; font-family:'JetBrains Mono',monospace; font-size:11.5px; line-height:1.5; border-bottom:1px solid rgba(255,255,255,.04); align-items:flex-start }
   .logrow .tm{ color:#4a5568; flex:none }
   .logrow.log .ms{ color:#cbd5e1 } .logrow.info .ms{ color:#7dd3fc }
@@ -151,43 +227,33 @@
 <body class="text-slate-200">
 
 <!-- ======================= SITE HEADER ======================= -->
-<header class="h-[58px] flex items-center gap-3 px-4 md:px-6 border-b border-white/5 relative z-40">
-  <div class="flex items-center gap-2.5">
-    <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#ff8a3c,#f5c542 60%,#5b9dff)">
+<header class="h-[var(--head)] flex items-center gap-3 px-3 md:px-5 border-b border-white/5 relative z-40 glass" style="padding-top:var(--sat);padding-left:max(12px,var(--sal));padding-right:max(12px,var(--sar));height:calc(var(--head) + var(--sat))">
+  <div class="flex items-center gap-2.5 min-w-0">
+    <div class="brandmark w-9 h-9 rounded-xl flex items-center justify-center flex-none" style="background:linear-gradient(135deg,#ff8a3c,#f5c542 60%,#5b9dff)">
       <i data-lucide="infinity" class="w-5 h-5 text-[#10141c]"></i>
     </div>
-    <div class="leading-tight">
-      <div class="font-bold text-[17px] tracking-tight text-white">ApeiroCreate</div>
-      <div class="text-[9.5px] tracking-[.22em] uppercase text-slate-500 -mt-0.5">WYSIWYG Studio</div>
+    <div class="leading-tight min-w-0">
+      <div class="font-bold text-[17px] tracking-tight text-white truncate">ApeiroCreate</div>
+      <div class="text-[9.5px] tracking-[.22em] uppercase text-slate-500 -mt-0.5 hidden sm:block">WYSIWYG Studio</div>
     </div>
-    <span class="ml-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-400">v1.0</span>
+    <span class="ml-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-400 flex-none hidden sm:inline">v1.0.1</span>
   </div>
-  <div class="ml-auto flex items-center gap-2">
-    <button id="runBtn" class="flex items-center gap-2 h-9 px-4 rounded-xl text-[12.5px] font-bold bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25 transition-all">
-      <i data-lucide="play" class="w-3.5 h-3.5"></i><span>Run</span>
-    </button>
-    <button id="importBtn" class="flex items-center gap-2 h-9 px-4 rounded-xl text-[12.5px] font-bold bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 transition-all">
-      <i data-lucide="file-up" class="w-4 h-4"></i><span class="hidden md:inline">Import</span>
-    </button>
+  <div class="ml-auto flex items-center gap-1.5 md:gap-2 overflow-x-auto no-scrollbar">
+    <button id="runBtn" class="hbtn good"><i data-lucide="play" class="w-3.5 h-3.5"></i><span>Run</span></button>
+    <button id="importBtn" class="hbtn"><i data-lucide="file-up" class="w-4 h-4"></i><span class="hidden md:inline">Import</span></button>
     <input type="file" id="importFile" accept=".html,.htm,text/html" class="hidden">
-    <button id="srcBtn" class="flex items-center gap-2 h-9 px-4 rounded-xl text-[12.5px] font-bold bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 transition-all">
-      <i data-lucide="code" class="w-4 h-4"></i><span class="hidden sm:inline">View Source</span>
-    </button>
-    <button id="clearBtn" class="flex items-center gap-2 h-9 px-4 rounded-xl text-[12.5px] font-bold bg-rose-500/10 border border-rose-500/30 text-rose-300 hover:bg-rose-500/20 transition-all">
-      <i data-lucide="trash-2" class="w-4 h-4"></i><span class="hidden sm:inline">Clear</span>
-    </button>
-    <button id="helpBtn" class="flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10 transition-all">
-      <i data-lucide="help-circle" class="w-4 h-4"></i>
-    </button>
+    <button id="srcBtn" class="hbtn"><i data-lucide="code" class="w-4 h-4"></i><span class="hidden lg:inline">Source</span></button>
+    <button id="clearBtn" class="hbtn warn"><i data-lucide="trash-2" class="w-4 h-4"></i><span class="hidden lg:inline">Clear</span></button>
+    <button id="helpBtn" class="hbtn sq"><i data-lucide="help-circle" class="w-4 h-4"></i></button>
   </div>
 </header>
 <div class="glowline w-full"></div>
 
 <!-- ======================= CANVAS WINDOW ======================= -->
-<main class="h-[calc(100vh-61px)] p-3 md:p-5">
+<main class="p-2 sm:p-3 md:p-5" style="height:calc(var(--vh) - var(--head) - var(--sat) - 3px);padding-bottom:max(8px,var(--sab));padding-left:max(8px,var(--sal));padding-right:max(8px,var(--sar))">
   <div id="win" class="h-full w-full rounded-2xl overflow-hidden flex flex-col bg-white">
     <!-- chrome -->
-    <div id="chrome" class="flex items-end gap-1 pl-2 pr-3 pt-2 select-none">
+    <div id="chrome" class="flex items-end gap-1 pl-2 pr-2 sm:pr-3 pt-2 select-none overflow-x-auto no-scrollbar">
       <button id="fsBtn" title="Fullscreen canvas" class="flex items-center gap-1.5 h-[30px] px-3 mb-1 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white transition-all text-[11px] font-bold mr-2">
         <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i><span class="hidden lg:inline">Fullscreen</span>
       </button>
@@ -268,7 +334,7 @@
 
       <!-- JS view -->
       <div id="view-js" class="absolute inset-0 hidden bg-[#14120a]">
-        <div class="absolute top-0 inset-x-0 z-20 flex items-center gap-2 px-3 py-2 border-b border-[#3a3115] bg-[#191509]/92 backdrop-blur">
+        <div class="absolute top-0 inset-x-0 z-20 flex items-center gap-2 px-2 sm:px-3 py-2 border-b border-[#3a3115] bg-[#191509]/92 backdrop-blur overflow-x-auto no-scrollbar">
           <button id="addNodeBtn" class="flex items-center gap-1.5 h-8 px-3 rounded-lg bg-[#f5c542] text-[#2a2205] text-[11.5px] font-bold hover:brightness-110 transition shadow-sm"><i data-lucide="plus" class="w-3.5 h-3.5"></i>Add Node</button>
           <button id="varsBtn" class="flex items-center gap-1.5 h-8 px-3 rounded-lg bg-[#241f0d] border border-[#3f3618] text-[#e8d79a] text-[11.5px] font-bold hover:bg-[#2e2711] transition"><i data-lucide="variable" class="w-3.5 h-3.5"></i>Variables<span id="varsCount" class="px-1.5 rounded-full bg-[#f5c542] text-[#2a2205] text-[9.5px]">0</span></button>
           <button id="runBtn2" class="flex items-center gap-1.5 h-8 px-3 rounded-lg bg-emerald-500 text-[#04140a] text-[11.5px] font-bold hover:brightness-110 transition shadow-sm"><i data-lucide="play" class="w-3.5 h-3.5"></i>Run</button>
@@ -289,7 +355,7 @@
 
     <!-- console -->
     <div id="console">
-      <div class="h-[34px] flex items-center gap-2 px-3 border-b border-[#1d2432] bg-[#0b0d13]">
+      <div id="conHead" class="h-[36px] flex items-center gap-2 px-3 border-b border-[#1d2432] bg-[#0b0d13]">
         <i data-lucide="terminal" class="w-3.5 h-3.5 text-slate-500"></i>
         <span class="text-[11px] font-bold tracking-[.12em] uppercase text-slate-400">Console</span>
         <span id="conCount" class="text-[10px] text-slate-600 font-mono"></span>
@@ -299,7 +365,7 @@
           <button id="conClose" class="w-6 h-6 rounded-md bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10 transition flex items-center justify-center"><i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
         </div>
       </div>
-      <div id="conBody" class="h-[156px] overflow-y-auto"></div>
+      <div id="conBody"></div>
     </div>
   </div>
 </main>
@@ -347,7 +413,7 @@
 
 <script>
 /* ================================================================
-   ApeiroCreate v1.0 — core
+   ApeiroCreate v1.0.1 — core
 ================================================================ */
 const qs=(s,r=document)=>r.querySelector(s), qsa=(s,r=document)=>[...r.querySelectorAll(s)];
 let _uid=1000; const uid=p=>p+(_uid++);
@@ -385,22 +451,177 @@ function conToggle(force){ CON.open=force!==undefined?force:!CON.open; qs('#cons
 /* ---------------- state ---------------- */
 const FONTS=['Inter','Space Grotesk','Poppins','Playfair Display','Merriweather','Roboto Mono','JetBrains Mono','Bebas Neue','Lobster','Georgia','Arial','Courier New','system-ui','serif','monospace'];
 const S={ tab:'html', elements:[], rules:[], nodes:[], conns:[], vars:[], meta:{title:'ApeiroCreate Project',icon:'',lang:'en',theme:'#0b0e14'}, sel:null, selRule:null, selNode:null, selWire:null, bg:{kind:'css',val:'#ffffff'}, running:false, pan:{x:30,y:70,s:1} };
-let saveT=null;
-function save(){ clearTimeout(saveT); saveT=setTimeout(()=>{ try{ localStorage.setItem('apeiro_v1', JSON.stringify({elements:S.elements,rules:S.rules,nodes:S.nodes,conns:S.conns,vars:S.vars,meta:S.meta,bg:S.bg,pan:S.pan,_uid})); }catch(e){} },350); }
-function load(){ try{ const d=JSON.parse(localStorage.getItem('apeiro_v1')); if(d){ S.elements=d.elements||[]; S.rules=d.rules||[]; S.nodes=d.nodes||[]; S.conns=d.conns||[]; S.vars=d.vars||[]; if(d.meta)S.meta=Object.assign(S.meta,d.meta); S.bg=d.bg||S.bg; S.pan=d.pan||S.pan; if(d._uid)_uid=d._uid; return true; } }catch(e){} return false; }
+/* ================================================================
+   PERSISTENCE v1.0.1 — crash-safe, versioned, self-healing
+   Slots: apeiro_v1 (live) · apeiro_v1_bak (previous good) · apeiro_v1_snap (hourly)
+================================================================ */
+const SCHEMA=3, KEY='apeiro_v1', KEY_BAK='apeiro_v1_bak', KEY_SNAP='apeiro_v1_snap';
+let saveT=null, loadedOK=false, lastGood='';
+function snapshot(){ return {schema:SCHEMA,app:'1.0.1',t:Date.now(),elements:S.elements,rules:S.rules,nodes:S.nodes,conns:S.conns,vars:S.vars,meta:S.meta,bg:S.bg,pan:S.pan,gr:{layers:GR.layers,bg:GR.bg,bg2:GR.bg2,vignette:GR.vignette},_uid}; }
+function isEmptyProject(d){ return !((d.elements||[]).length||(d.rules||[]).length||(d.nodes||[]).length||(d.vars||[]).length); }
+function writeSlot(k,str){ try{ localStorage.setItem(k,str); return true; }
+  catch(err){
+    if(String(err.name||'').includes('Quota')||err.code===22){
+      try{ localStorage.removeItem(KEY_SNAP); localStorage.setItem(k,str); conLog('warn','Storage full — old snapshot discarded to make room.'); return true; }catch(e2){}
+      conLog('error','Save failed: browser storage is full. Use View Source → Download to keep your work.');
+      toast('Storage full — download your project!','alert-triangle');
+    } else conLog('error','Save failed: '+err.message);
+    return false; } }
+function saveNow(){
+  clearTimeout(saveT); saveT=null;
+  if(!loadedOK)return;                                   /* never overwrite before a successful load */
+  let str; try{ str=JSON.stringify(snapshot()); }catch(err){ conLog('error','Could not serialise project: '+err.message); return; }
+  try{ JSON.parse(str); }catch(err){ conLog('error','Aborted save: data was malformed.'); return; }
+  const prev=localStorage.getItem(KEY);
+  /* guard: refuse to silently replace a real project with an empty one */
+  if(prev&&str.length<prev.length*0.35){
+    try{ const old=JSON.parse(prev); if(!isEmptyProject(old)&&isEmptyProject(JSON.parse(str))){ conLog('warn','Blocked a save that would have emptied your project.'); return; } }catch(e){}
+  }
+  if(prev&&prev!==lastGood)writeSlot(KEY_BAK,prev);       /* rotate previous good copy */
+  if(writeSlot(KEY,str)){ lastGood=str;
+    const sn=localStorage.getItem(KEY_SNAP);
+    let stale=true; try{ stale=!sn||Date.now()-(JSON.parse(sn).t||0)>36e5; }catch(e){}
+    if(stale)writeSlot(KEY_SNAP,str);
+  }
+}
+function save(){ clearTimeout(saveT); saveT=setTimeout(saveNow,400); }
+addEventListener('beforeunload',()=>{ if(saveT)saveNow(); });
+addEventListener('pagehide',()=>{ if(saveT)saveNow(); });
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&saveT)saveNow(); });
+
+/* ---- migration from every earlier ApeiroCreate build ---- */
+function migrate(d){
+  if(!d||typeof d!=='object')return null;
+  const from=d.schema||(d.app?2:1);
+  d.elements=Array.isArray(d.elements)?d.elements:[];
+  d.rules=Array.isArray(d.rules)?d.rules:[];
+  d.nodes=Array.isArray(d.nodes)?d.nodes:[];
+  d.conns=Array.isArray(d.conns)?d.conns:[];
+  d.vars=Array.isArray(d.vars)?d.vars:[];
+  /* v1.0 elements: card flag, missing geometry / summary / opts */
+  d.elements.forEach(e=>{
+    if(!e.id)e.id=uid('e');
+    e.attrs=e.attrs||{}; e.style=e.style||{};
+    if(e.w===undefined)e.w='auto'; if(e.h===undefined)e.h='auto';
+    if(e.x===undefined)e.x=30; if(e.y===undefined)e.y=30;
+    e.rot=+e.rot||0; e.z=+e.z||1;
+    if(e.card){ delete e.card; }                                  /* removed preset composition */
+    if(e.tag==='details'&&!e.summary)e.summary='text';
+  });
+  /* v1.0 rules had no enabled/raw fields */
+  d.rules.forEach(r=>{ if(!r.id)r.id=uid('r'); if(r.enabled===undefined)r.enabled=true; r.decls=Array.isArray(r.decls)?r.decls:[]; });
+  /* node data renames + dropped node types */
+  const GONE={'create-var-old':'create-var'};
+  d.nodes=d.nodes.filter(n=>{
+    if(!n||!n.type)return false;
+    if(GONE[n.type])n.type=GONE[n.type];
+    n.data=n.data||{}; n.x=+n.x||0; n.y=+n.y||0; if(!n.id)n.id=uid('n');
+    if(!NDEFS[n.type]){ conLog('warn',`Dropped unknown node "${n.type}" from an older version.`); return false; }
+    /* fill in fields added after this node was saved */
+    (NDEFS[n.type].d||[]).forEach(f=>{ if(n.data[f.k]===undefined)n.data[f.k]=f.def; });
+    return true;
+  });
+  const ids=new Set(d.nodes.map(n=>n.id));
+  d.conns=d.conns.filter(c=>c&&c.o&&c.i&&ids.has(c.o[0])&&ids.has(c.i[0]));
+  d.conns.forEach(c=>{ if(!c.id)c.id=uid('c'); if(!c.kind)c.kind='exec'; });
+  /* v1.0 had no vars / meta / pattern studio */
+  d.meta=Object.assign({title:'ApeiroCreate Project',icon:'',lang:'en',theme:'#0b0e14'},d.meta||{});
+  d.bg=d.bg&&d.bg.val?d.bg:{kind:'css',val:(typeof d.bg==='string'?d.bg:'#ffffff')};
+  d.pan=d.pan||{x:30,y:70,s:1};
+  if(from<SCHEMA)conLog('ok',`Migrated project data from an older version (schema ${from} → ${SCHEMA}).`);
+  d.schema=SCHEMA;
+  return d;
+}
+function applyLoaded(d){
+  S.elements=d.elements; S.rules=d.rules; S.nodes=d.nodes; S.conns=d.conns; S.vars=d.vars;
+  S.meta=Object.assign(S.meta,d.meta); S.bg=d.bg; S.pan=d.pan;
+  if(d.gr){ if(Array.isArray(d.gr.layers)&&d.gr.layers.length)GR.layers=d.gr.layers; if(d.gr.bg)GR.bg=d.gr.bg; GR.bg2=d.gr.bg2||''; GR.vignette=+d.gr.vignette||0; }
+  const maxN=Math.max(0,...[...S.elements.map(e=>+String(e.id).slice(1)||0),...S.nodes.map(n=>+String(n.id).slice(1)||0),...S.rules.map(r=>+String(r.id).slice(1)||0)]);
+  _uid=Math.max(+d._uid||0,maxN+1,1000);                         /* never reissue an existing id */
+}
+function load(){
+  const tryKey=k=>{ const raw=localStorage.getItem(k); if(!raw)return null;
+    try{ return migrate(JSON.parse(raw)); }catch(err){ conLog('warn',`Save slot "${k}" was corrupt (${err.message}).`); return null; } };
+  let d=tryKey(KEY), used=KEY;
+  if(!d){ d=tryKey(KEY_BAK); used=KEY_BAK; if(d)conLog('ok','Recovered your work from the backup slot.'); }
+  if(!d){ d=tryKey(KEY_SNAP); used=KEY_SNAP; if(d)conLog('ok','Recovered your work from the hourly snapshot.'); }
+  /* legacy keys from older builds */
+  if(!d){ for(const k of ['apeiro_v1_0','apeirocreate','apeiro_project','apeiro']){ d=tryKey(k); if(d){ used=k; conLog('ok','Imported data from an older ApeiroCreate install.'); break; } } }
+  loadedOK=true;                                                  /* saving is now allowed */
+  if(!d)return false;
+  applyLoaded(d); lastGood=localStorage.getItem(used)||'';
+  if(used!==KEY)setTimeout(saveNow,600);                          /* re-home recovered data */
+  return true;
+}
 
 /* ---------------- floating menu helper ---------------- */
 let curMenu=null;
-function closeMenu(){ if(curMenu){ curMenu.remove(); curMenu=null; } }
+function closeMenu(){
+  if(!curMenu)return;
+  const c=curMenu; curMenu=null; document.body.classList.remove('menu-open'); c.remove();   /* null first: re-entrant calls can't double-remove */
+}
+const isSheet=()=>innerWidth<=760;
+/* pointers already down when a menu opens must never be able to dismiss it */
+const livePointers=new Set();
+addEventListener('pointerdown',e=>livePointers.add(e.pointerId),true);
+['pointerup','pointercancel'].forEach(ev=>addEventListener(ev,e=>livePointers.delete(e.pointerId),true));
+
 function openMenu(build,x,y,wide){
   closeMenu();
-  const layer=qs('#menuLayer');
-  const bk=document.createElement('div'); bk.className='menubk'; bk.addEventListener('pointerdown',closeMenu);
-  bk.addEventListener('contextmenu',e=>{e.preventDefault();closeMenu();});
-  const m=document.createElement('div'); m.className='menu'; if(wide)m.style.width=wide+'px';
-  layer.append(bk,m); build(m);
-  m.style.visibility='hidden'; requestAnimationFrame(()=>{ const w=m.offsetWidth,h=m.offsetHeight; m.style.left=clamp(x-w/2,8,innerWidth-w-8)+'px'; m.style.top=clamp(y-h-14,8,innerHeight-h-8)+'px'; m.style.visibility='visible'; });
-  curMenu=bk; const rm=curMenu; curMenu={ remove(){ bk.remove(); m.remove(); } };
+  document.body.classList.add('menu-open');
+  const layer=(typeof fsHost==='function'?fsHost():document.body).querySelector('#menuLayer')||qs('#menuLayer');
+  const openedAt=performance.now();
+  const stale=new Set(livePointers);                 /* fingers/buttons held during opening */
+  const tooSoon=e=>performance.now()-openedAt<420||(e&&e.pointerId!=null&&stale.has(e.pointerId));
+
+  const bk=document.createElement('div'); bk.className='menubk';
+  /* dismiss on a *fresh, complete* tap outside — not on the tail of the opening gesture */
+  bk.addEventListener('pointerdown',e=>{ if(tooSoon(e)){ e.preventDefault(); e.stopPropagation(); return; } bk.dataset.armed='1'; });
+  /* only a press that STARTED on the backdrop can dismiss — blocks synthetic taps from the opening gesture */
+  bk.addEventListener('pointerup',e=>{ if(!bk.dataset.armed||tooSoon(e))return; closeMenu(); });
+  bk.addEventListener('click',e=>{ if(!bk.dataset.armed)return; closeMenu(); });
+  bk.addEventListener('contextmenu',e=>{ e.preventDefault(); if(!tooSoon(e))closeMenu(); });
+
+  const m=document.createElement('div'); m.className='menu'; if(wide&&!isSheet())m.style.width=wide+'px';
+  m.addEventListener('pointerdown',e=>e.stopPropagation());     /* never leaks to the backdrop */
+  layer.append(bk,m);
+  const grab=document.createElement('div'); grab.className='mgrab'; m.append(grab);
+  build(m);
+  if(m.firstElementChild!==grab)m.insertBefore(grab,m.firstChild);
+
+  if(isSheet()){
+    m.style.visibility='visible';
+    /* wait for the slide-in to finish before the sheet can be dragged */
+    let ready=false;
+    const arm=()=>{ ready=true; };
+    m.addEventListener('animationend',arm,{once:true});
+    setTimeout(arm,420);                                        /* fallback if the event is missed */
+    let y0=null,pid=null;
+    m.addEventListener('pointerdown',e=>{
+      if(!ready||tooSoon(e)||stale.has(e.pointerId))return;
+      if(e.target.closest('input,select,textarea,button,a,.menu-b'))return;
+      y0=e.clientY; pid=e.pointerId; m.style.transition='none';
+    });
+    m.addEventListener('pointermove',e=>{
+      if(y0==null||e.pointerId!==pid)return;
+      const d=e.clientY-y0; if(d>0)m.style.transform=`translateY(${d}px)`;
+    });
+    const end=e=>{
+      if(y0==null||(e.pointerId!=null&&e.pointerId!==pid))return;
+      const d=(e.clientY||0)-y0; y0=null; pid=null;
+      m.style.transition=''; m.style.transform='';
+      if(d>110)closeMenu();
+    };
+    m.addEventListener('pointerup',end); m.addEventListener('pointercancel',end);
+  } else {
+    m.style.visibility='hidden';
+    requestAnimationFrame(()=>{
+      if(!m.isConnected)return;
+      const w=m.offsetWidth,h=m.offsetHeight;
+      let top=y-h-16; if(top<8)top=Math.min(y+18,innerHeight-h-8);
+      m.style.left=clamp(x-w/2,8,innerWidth-w-8)+'px'; m.style.top=clamp(top,8,Math.max(8,innerHeight-h-8))+'px'; m.style.visibility='visible'; });
+  }
+  curMenu={ el:m, back:bk, openedAt, remove(){ bk.remove(); m.remove(); } };
   icons(); return m;
 }
 addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeMenu(); qs('#srcModal').classList.add('hidden'); } });
@@ -410,8 +631,29 @@ addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeMenu(); qs('#srcModal
 ================================================================ */
 qsa('.tab').forEach(t=>t.addEventListener('click',()=>setTab(t.dataset.tab)));
 function setTab(tab){ S.tab=tab; qsa('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===tab)); qs('#view-html').classList.toggle('hidden',tab!=='html'); qs('#view-css').classList.toggle('hidden',tab!=='css'); qs('#view-js').classList.toggle('hidden',tab!=='js'); closeMenu(); if(tab==='js')requestAnimationFrame(layoutWires); }
-qs('#fsBtn').addEventListener('click',()=>{ const w=qs('#win'); if(!document.fullscreenElement){ (w.requestFullscreen||w.webkitRequestFullscreen).call(w); } else document.exitFullscreen(); });
-document.addEventListener('fullscreenchange',()=>{ const on=!!document.fullscreenElement; qs('#fsBtn').innerHTML=`<i data-lucide="${on?'minimize-2':'maximize-2'}" class="w-3.5 h-3.5"></i><span class="hidden lg:inline">${on?'Exit Fullscreen':'Fullscreen'}</span>`; icons(); });
+qs('#fsBtn').addEventListener('click',()=>{
+  const w=qs('#win');
+  const fsEl=document.fullscreenElement||document.webkitFullscreenElement;
+  if(!fsEl){ const rq=w.requestFullscreen||w.webkitRequestFullscreen||w.webkitEnterFullscreen;
+    if(rq) rq.call(w); else { document.body.classList.toggle('faux-fs'); onFsChange(); } }
+  else { (document.exitFullscreen||document.webkitExitFullscreen).call(document); }
+});
+/* menus/toasts must live INSIDE the fullscreen element or they are invisible */
+function fsHost(){ return document.fullscreenElement||document.webkitFullscreenElement||(document.body.classList.contains('faux-fs')?qs('#win'):document.body); }
+function onFsChange(){
+  const on=!!(document.fullscreenElement||document.webkitFullscreenElement)||document.body.classList.contains('faux-fs');
+  const host=on?qs('#win'):document.body;
+  ['#menuLayer','#toasts','#pickBar','#srcModal','#cfModal'].forEach(id=>{ const el=qs(id); if(el&&el.parentElement!==host)host.appendChild(el); });
+  const b=qs('#fsBtn'); if(b){ b.innerHTML=`<i data-lucide="${on?'minimize-2':'maximize-2'}" class="w-3.5 h-3.5"></i><span class="hidden lg:inline">${on?'Exit':'Fullscreen'}</span>`; }
+  closeMenu(); icons(); setTimeout(()=>{ drawOverlay&&drawOverlay(); layoutWires&&layoutWires(); },120);
+}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+/* iOS/Android viewport + orientation handling */
+function syncVH(){ const h=(window.visualViewport&&window.visualViewport.height)||innerHeight; document.documentElement.style.setProperty('--vh',h+'px'); }
+syncVH(); addEventListener('resize',syncVH); addEventListener('orientationchange',()=>setTimeout(syncVH,250));
+if(window.visualViewport){ visualViewport.addEventListener('resize',syncVH); visualViewport.addEventListener('scroll',syncVH); }
+document.addEventListener('gesturestart',e=>e.preventDefault());
 
 /* ================================================================
    HTML TABLE — ELEMENTS (WYSIWYG stage)
@@ -571,7 +813,10 @@ function drawOverlay(){
   box.style.left=(el.offsetLeft-s.x)+'px'; box.style.top=(el.offsetTop-s.y)+'px';
   box.style.width=el.offsetWidth+'px'; box.style.height=el.offsetHeight+'px';
   if(e.rot)box.style.transform=`rotate(${e.rot}deg)`;
-  box.innerHTML=`<span class="tagl">&lt;${esc(e.tag)}&gt; ${esc(e.id)}</span><span class="rsz2"></span>`;
+  box.innerHTML=`<span class="tagl">&lt;${esc(e.tag)}&gt; ${esc(e.id)}</span>`+
+    (e.rot?`<span class="angl">${Math.round(e.rot)}°</span>`:'')+
+    `<span class="rotstem"></span><span class="rot2" title="Drag to rotate · double-tap to reset"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></span>`+
+    `<span class="rsz2"></span>`;
   ovl.append(box);
 }
 const refreshSel=drawOverlay;
@@ -588,7 +833,7 @@ function hitAid(cx,cy){
 
 /* ---- unified pointer interaction on the overlay ---- */
 (()=>{
-  let mode='idle',tid=null,sx=0,sy=0,ox=0,oy=0,ow=0,oh=0,cur=null;
+  let mode='idle',tid=null,sx=0,sy=0,ox=0,oy=0,ow=0,oh=0,cur=null,rc={x:0,y:0},ra0=0,rot0=0,lastRotTap=0;
   const stop=()=>{ clearTimeout(tid); tid=null; };
   ovl.addEventListener('contextmenu',ev=>{
     ev.preventDefault(); if(S.running)return;
@@ -613,9 +858,16 @@ function hitAid(cx,cy){
     }
     sx=ev.clientX; sy=ev.clientY; ovl.setPointerCapture(ev.pointerId);
     /* resize handle? */
-    if(ev.target.classList&&ev.target.classList.contains('rsz2')){
+    if(ev.target.closest&&ev.target.closest('.rsz2')){
       cur=elById(S.sel); if(!cur)return;
       const el=dEl(cur.id); ow=el?el.offsetWidth:100; oh=el?el.offsetHeight:40; mode='resize'; ev.preventDefault(); return;
+    }
+    if(ev.target.closest&&ev.target.closest('.rot2')){
+      cur=elById(S.sel); if(!cur)return;
+      const el=dEl(cur.id), r=stage.getBoundingClientRect(), sc=dScroll();
+      rc={ x:r.left+(el?el.offsetLeft-sc.x+el.offsetWidth/2:0), y:r.top+(el?el.offsetTop-sc.y+el.offsetHeight/2:0) };
+      rot0=cur.rot||0; ra0=Math.atan2(ev.clientY-rc.y,ev.clientX-rc.x)*180/Math.PI;
+      mode='rotate'; ev.preventDefault(); return;
     }
     const aid=hitAid(ev.clientX,ev.clientY);
     if(aid){
@@ -634,13 +886,21 @@ function hitAid(cx,cy){
     if(mode==='resize'&&cur){
       cur.w=Math.max(8,Math.round(ow+ev.clientX-sx)); cur.h=Math.max(8,Math.round(oh+ev.clientY-sy)); dGeom(cur); return;
     }
+    if(mode==='rotate'&&cur){
+      const a=Math.atan2(ev.clientY-rc.y,ev.clientX-rc.x)*180/Math.PI;
+      let deg=rot0+(a-ra0);
+      if(ev.shiftKey)deg=Math.round(deg/15)*15;                       /* snap */
+      else if(Math.abs(deg%90)<4||Math.abs(Math.abs(deg%90)-90)<4)deg=Math.round(deg/90)*90;
+      cur.rot=Math.round(((deg%360)+360)%360); dGeom(cur); return;
+    }
     if((mode==='wait'||mode==='bgwait')&&moved){ stop(); mode=mode==='wait'?'drag':'idle'; }
     if(mode==='drag'&&cur){ cur.x=Math.round(ox+ev.clientX-sx); cur.y=Math.round(oy+ev.clientY-sy); dGeom(cur); }
   });
   const up=()=>{
     stop();
     if(mode==='bgwait'){ S.sel=null; drawOverlay(); }
-    if(mode==='drag'||mode==='resize')save();
+    if(mode==='drag'||mode==='resize'||mode==='rotate')save();
+    if(mode==='rotate'){ const now=Date.now(); if(now-lastRotTap<320&&cur){ cur.rot=0; dGeom(cur); save(); } lastRotTap=now; }
     mode='idle'; cur=null;
   };
   ovl.addEventListener('pointerup',up); ovl.addEventListener('pointercancel',up);
@@ -650,9 +910,9 @@ function hitAid(cx,cy){
 function openInsert(x,y){
   openMenu(m=>{
     m.innerHTML=`<div class="menu-h"><i data-lucide="plus-circle" class="w-4 h-4 text-[#ff8a3c]"></i>Insert Element<button class="ml-auto mbtn !p-1.5" data-x><i data-lucide="x" class="w-4 h-4"></i></button></div>
-    <div class="px-3 pt-3"><div class="relative"><i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500"></i><input class="inp !pl-8" placeholder="Search elements…" data-search></div></div>
+    <div class="msearch"><i data-lucide="search" class="w-4 h-4"></i><input class="inp" placeholder="Search elements…" data-search></div>
     <div class="menu-b" data-list></div>
-    <div class="menu-b border-t border-white/8 !pt-2"><div class="mcat !mt-1">Canvas background</div><div data-bg></div></div>`;
+    <div class="menu-b border-t border-white/8 !pt-2"><div class="mcat !mt-1">Canvas background</div><div class="msec !mb-0" data-bg></div></div>`;
     const list=qs('[data-list]',m);
     const draw=(q='')=>{
       list.innerHTML='';
@@ -692,7 +952,7 @@ function openCustomize(e,x,y){
     const tag=e.tag.toUpperCase();
     m.innerHTML=`<div class="menu-h"><i data-lucide="sliders-horizontal" class="w-4 h-4 text-[#ff8a3c]"></i>&lt;${tag}&gt; · ${e.id}
       <button class="ml-auto mbtn !p-1.5" data-x><i data-lucide="x" class="w-4 h-4"></i></button></div>
-    <div class="menu-b space-y-3">
+    <div class="menu-b space-y-2.5">
       ${!['img','input','hr','iframe','video','audio','ul','select'].includes(e.tag)?`<div class="field"><span>Content</span><textarea class="inp" rows="2" data-f="text">${esc(e.text)}</textarea></div>`:''}
       ${e.tag==='img'?`<div class="field"><span>Image URL</span><input class="inp" data-a="src" value="${esc(e.attrs.src||'')}"></div>`:''}
       ${e.tag==='a'?`<div class="field"><span>Link href</span><input class="inp" data-a="href" value="${esc(e.attrs.href||'')}"></div>`:''}
@@ -702,7 +962,7 @@ function openCustomize(e,x,y){
         <div class="field"><span>Element ID (JS selector)</span><input class="inp font-mono" data-a="id" value="${esc(e.attrs.id||'')}" placeholder="e.g. score"></div>
         <div class="field"><span>CSS classes</span><input class="inp font-mono" data-a="class" value="${esc(e.attrs.class||'')}"></div>
       </div>
-      <div><div class="mcat !mt-0">Position &amp; size</div>
+      <div class="msec"><div class="mcat !mt-0">Position &amp; size</div>
         <div class="flex gap-3">
           <div class="p9" data-p9></div>
           <div class="grid grid-cols-2 gap-2 flex-1">
@@ -718,7 +978,7 @@ function openCustomize(e,x,y){
           <div class="field"><span>Order</span><div class="inp !py-[7px] text-center font-mono" data-zv>${e.z||1}</div></div>
         </div>
       </div>
-      <div><div class="mcat">Typography</div>
+      <div class="msec"><div class="mcat !mt-0">Typography</div>
         <div class="grid grid-cols-2 gap-2">
           <div class="field"><span>Font</span><select class="inp" data-s="fontFamily">${FONTS.map(f=>`<option ${st.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select></div>
           <div class="field"><span>Size px</span><input type="number" class="inp" data-spx="fontSize" value="${parseInt(st.fontSize)||''}" placeholder="auto"></div>
@@ -730,7 +990,7 @@ function openCustomize(e,x,y){
           ${['left','center','right'].map(a=>`<button class="mbtn flex-1 ${st.textAlign===a?'on':''}" data-ta="${a}">${a[0].toUpperCase()}</button>`).join('')}
         </div>
       </div>
-      <div><div class="mcat">Appearance</div>
+      <div class="msec"><div class="mcat !mt-0">Appearance</div>
         <div class="grid grid-cols-2 gap-2">
           <div class="field"><span>Text color</span><input type="color" class="inp" data-s="color" value="${/^#/.test(st.color||'')?st.color:'#10141c'}"></div>
           <div class="field"><span>Background</span><div class="flex gap-1"><input type="color" class="inp flex-1" data-s="backgroundColor" value="${/^#/.test(st.backgroundColor||'')?st.backgroundColor:'#ffffff'}"><button class="mbtn !px-2" data-none="backgroundColor"><i data-lucide="ban" class="w-3.5 h-3.5"></i></button></div></div>
@@ -742,11 +1002,11 @@ function openCustomize(e,x,y){
           ${['','0 4px 12px rgba(15,23,42,.12)','0 10px 30px rgba(15,23,42,.18)','0 20px 50px -12px rgba(15,23,42,.3)','0 0 24px rgba(255,138,60,.55)'].map(v=>`<option value="${esc(v)}" ${st.boxShadow===v?'selected':''}>${v?({'0 4px 12px rgba(15,23,42,.12)':'Small','0 10px 30px rgba(15,23,42,.18)':'Medium','0 20px 50px -12px rgba(15,23,42,.3)':'Large','0 0 24px rgba(255,138,60,.55)':'Orange glow'}[v]):'None'}</option>`).join('')}
         </select></div>
       </div>
-      ${e.tag==='button'?`<div><div class="mcat">Button themes</div><div class="grid grid-cols-3 gap-1.5">
+      ${e.tag==='button'?`<div class="msec"><div class="mcat !mt-0">Button themes</div><div class="grid grid-cols-3 gap-1.5">
         ${[['Primary','#ff8a3c','#fff'],['Dark','#10141c','#f5c542'],['Ocean','#5b9dff','#fff'],['Mint','#10b981','#fff'],['Rose','#f43f5e','#fff'],['Ghost','#ffffff','#10141c']].map(t=>`<button class="mbtn" data-th="${t[1]}|${t[2]}" style="background:${t[1]}22;border-color:${t[1]}66">${t[0]}</button>`).join('')}
       </div></div>`:''}
-      ${e.tag==='img'?`<div><div class="mcat">Image tools</div><button class="mbtn w-full" data-pix><i data-lucide="grid-2x2" class="w-4 h-4"></i>Pixel-art recreate this image</button></div>`:''}
-      <div><div class="mcat">Quick CSS — every property</div>
+      ${e.tag==='img'?`<div class="msec"><div class="mcat !mt-0">Image tools</div><button class="mbtn w-full" data-pix><i data-lucide="grid-2x2" class="w-4 h-4"></i>Pixel-art recreate this image</button></div>`:''}
+      <div class="msec"><div class="mcat !mt-0">Quick CSS — every property</div>
         <div class="space-y-1.5" data-css></div>
         <div class="flex gap-1.5 mt-2">
           <button class="mbtn flex-1" data-addcss><i data-lucide="plus" class="w-3.5 h-3.5"></i>Add property</button>
@@ -819,7 +1079,7 @@ const CSS_PROPS=['accent-color','align-content','align-items','align-self','anim
 const CSS_VALS={display:['block','inline-block','flex','grid','inline','none','contents'],position:['static','relative','absolute','fixed','sticky'],overflow:['visible','hidden','scroll','auto'],['flex-direction']:['row','row-reverse','column','column-reverse'],['justify-content']:['flex-start','center','flex-end','space-between','space-around','space-evenly'],['align-items']:['stretch','flex-start','center','flex-end','baseline'],['text-align']:['left','center','right','justify'],['font-weight']:['100','300','400','500','600','700','800','900','bold'],['font-style']:['normal','italic','oblique'],['text-transform']:['none','uppercase','lowercase','capitalize'],cursor:['pointer','default','move','grab','text','not-allowed'],visibility:['visible','hidden'],['pointer-events']:['auto','none'],['background-repeat']:['no-repeat','repeat','repeat-x','repeat-y'],['background-size']:['cover','contain','auto'],['object-fit']:['cover','contain','fill','none'],['animation']:['spin 1s linear infinite']};
 
 function ruleById(id){ return S.rules.find(r=>r.id===id); }
-function liveCSS(){ return S.rules.filter(r=>r.enabled!==false&&r.selector.trim()).map(r=>`${r.selector}{${r.decls.filter(d=>d.prop&&d.val).map(d=>`${kebab(d.prop)}:${d.val}`).join(';')}}`).join('\n'); }
+function liveCSS(){ return S.rules.filter(r=>r.enabled!==false&&(r.raw||String(r.selector||'').trim())).map(r=>r.raw?r.raw:`${r.selector}{${(r.decls||[]).filter(d=>d.prop&&d.val).map(d=>`${kebab(d.prop)}:${d.val}`).join(';')}}`).join('\n'); }
 function applyCSS(){
   const old=qs('#liveCSS'); if(old)old.remove();            /* never leak user CSS into the editor UI */
   const d=dDoc(); if(!d||!d.head)return;
@@ -1006,6 +1266,109 @@ function mountGrid(box){
   };
   draw();
 }
+/* ================================================================
+   WYSIWYG PATTERN STUDIO — visual layer composer (v1.0.1)
+================================================================ */
+const hexA=(c,a)=>{ if(a>=1)return c; if(/^#([0-9a-f]{6})$/i.test(c))return c+Math.round(clamp(a,0,1)*255).toString(16).padStart(2,'0'); return c; };
+const PATFNS={
+ grid:p=>[`linear-gradient(${p.c} ${p.t}px, transparent ${p.t}px) ${p.ox}px ${p.oy}px/${p.s}px ${p.sy}px`,`linear-gradient(90deg, ${p.c} ${p.t}px, transparent ${p.t}px) ${p.ox}px ${p.oy}px/${p.s}px ${p.sy}px`],
+ dots:p=>[`radial-gradient(circle at ${p.t*1.2}px ${p.t*1.2}px, ${p.c} ${p.t}px, transparent ${p.t+0.7}px) ${p.ox}px ${p.oy}px/${p.s}px ${p.sy}px`],
+ hexdots:p=>[`radial-gradient(${p.c} ${p.t}px, transparent ${p.t+0.7}px) 0 0/${p.s}px ${p.sy}px`,`radial-gradient(${p.c} ${p.t}px, transparent ${p.t+0.7}px) ${p.s/2}px ${p.sy/2}px/${p.s}px ${p.sy}px`],
+ rings:p=>[`radial-gradient(circle, transparent ${p.s/3}px, ${p.c} ${p.s/3}px, ${p.c} ${p.s/3+p.t}px, transparent ${p.s/3+p.t}px) 0 0/${p.s}px ${p.sy}px`],
+ lines:p=>[`repeating-linear-gradient(${p.a}deg, ${p.c} 0 ${p.t}px, transparent ${p.t}px ${p.s}px)`],
+ stripes:p=>[`repeating-linear-gradient(${p.a}deg, ${p.c} 0 ${p.s/2}px, transparent ${p.s/2}px ${p.s}px)`],
+ crosshatch:p=>[`repeating-linear-gradient(${p.a}deg, ${p.c} 0 ${p.t}px, transparent ${p.t}px ${p.s}px)`,`repeating-linear-gradient(${p.a+90}deg, ${p.c} 0 ${p.t}px, transparent ${p.t}px ${p.s}px)`],
+ checker:p=>[`conic-gradient(${p.c} 0 25%, transparent 0 50%, ${p.c} 0 75%, transparent 0) 0 0/${p.s*2}px ${p.sy*2}px`],
+ triangles:p=>[`conic-gradient(from ${p.a}deg at 50% 0, ${p.c} 0 25%, transparent 0 100%) 0 0/${p.s}px ${p.sy}px`],
+ zigzag:p=>[`linear-gradient(135deg, ${p.c} 25%, transparent 25%) 0 0/${p.s}px ${p.sy}px`,`linear-gradient(225deg, ${p.c} 25%, transparent 25%) 0 0/${p.s}px ${p.sy}px`,`linear-gradient(315deg, ${p.c} 25%, transparent 25%) ${p.s/2}px ${p.sy/2}px/${p.s}px ${p.sy}px`,`linear-gradient(45deg, ${p.c} 25%, transparent 25%) ${p.s/2}px ${p.sy/2}px/${p.s}px ${p.sy}px`],
+ waves:p=>[`radial-gradient(circle at 50% 100%, transparent ${p.s/2-p.t}px, ${p.c} ${p.s/2-p.t}px, ${p.c} ${p.s/2}px, transparent ${p.s/2}px) 0 0/${p.s}px ${p.sy}px`,`radial-gradient(circle at 50% 0, transparent ${p.s/2-p.t}px, ${p.c} ${p.s/2-p.t}px, ${p.c} ${p.s/2}px, transparent ${p.s/2}px) ${p.s/2}px ${p.sy/2}px/${p.s}px ${p.sy}px`],
+ scales:p=>[`radial-gradient(circle at 50% 100%, ${p.c} ${p.s/2}px, transparent ${p.s/2+p.t}px) 0 0/${p.s}px ${p.sy/2}px`,`radial-gradient(circle at 50% 100%, ${p.c} ${p.s/2}px, transparent ${p.s/2+p.t}px) ${p.s/2}px ${p.sy/4}px/${p.s}px ${p.sy/2}px`],
+ bricks:p=>[`linear-gradient(transparent ${p.sy-p.t}px, ${p.c} ${p.sy-p.t}px) 0 0/${p.s*2}px ${p.sy}px`,`linear-gradient(90deg, ${p.c} ${p.t}px, transparent ${p.t}px) 0 0/${p.s*2}px ${p.sy*2}px`,`linear-gradient(90deg, ${p.c} ${p.t}px, transparent ${p.t}px) ${p.s}px ${p.sy}px/${p.s*2}px ${p.sy*2}px`],
+ carbon:p=>[`linear-gradient(27deg, ${p.c} ${p.t*3}px, transparent ${p.t*3}px) 0 ${p.s/2}px/${p.s}px ${p.sy}px`,`linear-gradient(207deg, ${p.c} ${p.t*3}px, transparent ${p.t*3}px) ${p.s/2}px 0/${p.s}px ${p.sy}px`,`linear-gradient(153deg, ${p.c} ${p.t*3}px, transparent ${p.t*3}px) 0 0/${p.s}px ${p.sy}px`],
+ isometric:p=>[`repeating-linear-gradient(30deg, ${p.c} 0 ${p.t}px, transparent ${p.t}px ${p.s}px)`,`repeating-linear-gradient(150deg, ${p.c} 0 ${p.t}px, transparent ${p.t}px ${p.s}px)`,`repeating-linear-gradient(90deg, ${p.c} 0 ${p.t}px, transparent ${p.t}px ${p.s}px)`],
+ plaid:p=>[`repeating-linear-gradient(0deg, ${p.c} 0 ${p.t*2}px, transparent ${p.t*2}px ${p.s}px)`,`repeating-linear-gradient(90deg, ${p.c} 0 ${p.t*2}px, transparent ${p.t*2}px ${p.s}px)`,`repeating-linear-gradient(0deg, ${hexA(p.raw,.18)} 0 ${p.s/2}px, transparent ${p.s/2}px ${p.s*2}px)`],
+ cross:p=>[`linear-gradient(${p.c} ${p.t}px, transparent ${p.t}px) ${p.s/2}px ${p.s/2}px/${p.s}px ${p.sy}px`,`linear-gradient(90deg, ${p.c} ${p.t}px, transparent ${p.t}px) ${p.s/2}px ${p.s/2}px/${p.s}px ${p.sy}px`,`radial-gradient(${p.c} ${p.t}px, transparent ${p.t}px) 0 0/${p.s}px ${p.sy}px`],
+ diamonds:p=>[`conic-gradient(from 45deg, ${p.c} 0 25%, transparent 0 50%, ${p.c} 0 75%, transparent 0) 0 0/${p.s}px ${p.sy}px`],
+ confettiP:p=>[`radial-gradient(${p.c} 30%, transparent 32%) 0 0/${p.s}px ${p.sy}px`,`radial-gradient(${hexA(p.raw,.6)} 25%, transparent 27%) ${p.s*.6}px ${p.sy*.4}px/${p.s*1.4}px ${p.sy*1.3}px`],
+ starburst:p=>[`repeating-conic-gradient(from ${p.a}deg, ${p.c} 0 ${Math.max(1,p.t)}deg, transparent ${Math.max(1,p.t)}deg ${Math.max(2,p.s/2)}deg)`],
+ noise:p=>[`radial-gradient(${p.c} .6px, transparent .7px) 0 0/${p.s/3}px ${p.sy/3}px`,`radial-gradient(${hexA(p.raw,.5)} .5px, transparent .6px) ${p.s/5}px ${p.sy/4}px/${p.s/2}px ${p.sy/2}px`],
+};
+const PATKINDS2=Object.keys(PATFNS);
+Object.assign(GR,{ layers:[{kind:'grid',color:'#2a3345',size:24,thick:1,angle:45,opacity:1,scaleY:100,ox:0,oy:0}],
+  bg:'#0f1420', bg2:'', bgAngle:135, vignette:0, active:0, blend:'normal' });
+gridCSS=function(){
+  const parts=[];
+  (GR.layers||[]).forEach(L=>{
+    const f=PATFNS[L.kind]||PATFNS.grid;
+    const s=Math.max(2,+L.size||8);
+    parts.push(...f({ c:hexA(L.color,(+L.opacity==null?1:+L.opacity)), raw:L.color, t:Math.max(.5,+L.thick||1),
+      s, sy:Math.max(2,s*((+L.scaleY||100)/100)), a:+L.angle||0, ox:+L.ox||0, oy:+L.oy||0 }));
+  });
+  if(+GR.vignette>0)parts.push(`radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,${(+GR.vignette/100).toFixed(2)}) 100%)`);
+  parts.push(GR.bg2?`linear-gradient(${+GR.bgAngle||0}deg, ${GR.bg}, ${GR.bg2})`:GR.bg);
+  return parts.join(', ');
+};
+mountGrid=function(box){
+  const L=()=>GR.layers[GR.active]||GR.layers[0];
+  const thumb=k=>{ const p={c:'#8fb6ff',raw:'#8fb6ff',t:1.4,s:11,sy:11,a:45,ox:0,oy:0}; return (PATFNS[k](p).join(', ')+', #0d1626'); };
+  const draw=()=>{
+    const l=L();
+    box.innerHTML=`
+      <div class="rounded-xl h-20 mb-2 border border-[#23395c] shadow-inner" style="background:${gridCSS()}"></div>
+      <div class="text-[9.5px] font-bold uppercase tracking-[.12em] text-[#5b7fae] mb-1">Pattern gallery — tap to set layer ${GR.active+1}</div>
+      <div class="grid grid-cols-7 gap-1 mb-2">${PATKINDS2.map(k=>`<button title="${k}" class="h-8 rounded-md border ${l.kind===k?'border-[#5b9dff] ring-2 ring-[#5b9dff]/40':'border-[#23395c]'}" style="background:${thumb(k)}" data-kind="${k}"></button>`).join('')}</div>
+      <div class="flex items-center gap-1 mb-2">
+        <span class="text-[9.5px] font-bold uppercase tracking-[.1em] text-[#5b7fae] mr-1">Layers</span>
+        ${GR.layers.map((x,i)=>`<button class="chip !px-2 !h-6 !text-[10px] ${i===GR.active?'on':''}" data-layer="${i}">${i+1}</button>`).join('')}
+        <button class="chip !px-2 !h-6 !text-[10px]" data-addlayer>+</button>
+        ${GR.layers.length>1?`<button class="chip !px-2 !h-6 !text-[10px] !text-rose-300" data-dellayer>−</button>`:''}
+      </div>
+      ${[['size','Size',2,120,1,l.size],['thick','Thickness',.5,20,.5,l.thick],['angle','Angle',0,360,1,l.angle],
+         ['scaleY','Stretch Y %',20,300,5,l.scaleY],['opacity','Opacity',0,1,.05,l.opacity],
+         ['ox','Offset X',-60,60,1,l.ox],['oy','Offset Y',-60,60,1,l.oy]].map(([k,lab,mn,mx,st,val])=>
+        `<label class="flex items-center gap-2 mb-1"><span class="text-[9.5px] font-bold text-[#5b7fae] w-[62px] flex-none">${lab}</span>
+          <input type="range" min="${mn}" max="${mx}" step="${st}" value="${val}" class="flex-1 accent-[#5b9dff]" data-sl="${k}">
+          <span class="text-[9.5px] font-mono text-slate-400 w-8 text-right">${(+val).toFixed(k==='opacity'?2:0)}</span></label>`).join('')}
+      <div class="grid grid-cols-2 gap-1.5 my-2">
+        <label class="flex items-center gap-1.5"><span class="text-[9.5px] font-bold text-[#5b7fae]">LINE</span><input type="color" class="cinp !p-0.5 !h-7" value="${l.color}" data-lc></label>
+        <label class="flex items-center gap-1.5"><span class="text-[9.5px] font-bold text-[#5b7fae]">BG</span><input type="color" class="cinp !p-0.5 !h-7" value="${/^#/.test(GR.bg)?GR.bg:'#0f1420'}" data-bgc2></label>
+        <label class="flex items-center gap-1.5"><span class="text-[9.5px] font-bold text-[#5b7fae]">BG 2</span><input type="color" class="cinp !p-0.5 !h-7" value="${/^#/.test(GR.bg2)?GR.bg2:'#1e293b'}" data-bg2></label>
+        <label class="flex items-center gap-1.5"><span class="text-[9.5px] font-bold text-[#5b7fae]">FADE</span><input type="range" min="0" max="80" value="${GR.vignette}" class="flex-1 accent-[#5b9dff]" data-vig></label>
+      </div>
+      <div class="flex gap-1.5 mb-1.5">
+        <button class="chip flex-1" data-bg2off>${GR.bg2?'Flat BG':'Gradient BG'}</button>
+        <button class="chip flex-1" data-rand><i data-lucide="dices" class="w-3 h-3"></i>Surprise</button>
+        <button class="chip flex-1" data-swap>Swap</button>
+      </div>
+      <div class="flex gap-1.5">
+        <button class="chip flex-1 !bg-[#5b9dff] !text-[#06101f] !border-[#5b9dff]" data-apply>Apply to canvas</button>
+        <button class="chip" data-copy title="Copy CSS"><i data-lucide="copy" class="w-3 h-3"></i></button>
+      </div>`;
+    const re=()=>{ save(); draw(); };
+    qsa('[data-kind]',box).forEach(b=>b.addEventListener('click',()=>{ L().kind=b.dataset.kind; re(); }));
+    qsa('[data-layer]',box).forEach(b=>b.addEventListener('click',()=>{ GR.active=+b.dataset.layer; draw(); }));
+    const add=qs('[data-addlayer]',box); if(add)add.addEventListener('click',()=>{ GR.layers.push({kind:PATKINDS2[Math.floor(Math.random()*PATKINDS2.length)],color:'#5b9dff',size:32,thick:1,angle:45,opacity:.6,scaleY:100,ox:0,oy:0}); GR.active=GR.layers.length-1; re(); });
+    const del=qs('[data-dellayer]',box); if(del)del.addEventListener('click',()=>{ GR.layers.splice(GR.active,1); GR.active=0; re(); });
+    qsa('[data-sl]',box).forEach(sl=>sl.addEventListener('input',()=>{ L()[sl.dataset.sl]=+sl.value; const pv=qs('div',box); pv.style.background=gridCSS(); sl.nextElementSibling.textContent=(+sl.value).toFixed(sl.dataset.sl==='opacity'?2:0); }));
+    qsa('[data-sl]',box).forEach(sl=>sl.addEventListener('change',save));
+    qs('[data-lc]',box).addEventListener('input',e=>{ L().color=e.target.value; qs('div',box).style.background=gridCSS(); save(); });
+    qs('[data-bgc2]',box).addEventListener('input',e=>{ GR.bg=e.target.value; qs('div',box).style.background=gridCSS(); save(); });
+    qs('[data-bg2]',box).addEventListener('input',e=>{ GR.bg2=e.target.value; qs('div',box).style.background=gridCSS(); save(); });
+    qs('[data-vig]',box).addEventListener('input',e=>{ GR.vignette=+e.target.value; qs('div',box).style.background=gridCSS(); save(); });
+    qs('[data-bg2off]',box).addEventListener('click',()=>{ GR.bg2=GR.bg2?'':'#1e293b'; re(); });
+    qs('[data-swap]',box).addEventListener('click',()=>{ const t=L().color; L().color=GR.bg; GR.bg=t; re(); });
+    qs('[data-rand]',box).addEventListener('click',()=>{
+      const rc=()=>'#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+      GR.layers=Array.from({length:1+Math.floor(Math.random()*2)},()=>({kind:PATKINDS2[Math.floor(Math.random()*PATKINDS2.length)],color:rc(),size:10+Math.floor(Math.random()*50),thick:1+Math.floor(Math.random()*4),angle:Math.floor(Math.random()*360),opacity:+(0.35+Math.random()*0.65).toFixed(2),scaleY:100,ox:0,oy:0}));
+      GR.bg=rc(); GR.active=0; re();
+    });
+    qs('[data-apply]',box).addEventListener('click',()=>applyBgValue(gridCSS(),'Pattern'));
+    qs('[data-copy]',box).addEventListener('click',()=>{ navigator.clipboard.writeText(gridCSS()); toast('Pattern CSS copied','copy'); });
+    icons();
+  };
+  draw();
+};
+
 mountGrad(qs('#gradBox')); mountGrid(qs('#gridBox'));
 
 /* ---- page meta (CSS tab) ---- */
@@ -1020,19 +1383,49 @@ function mountMeta(){
 function importHTML(text,name){
   try{
     const doc=new DOMParser().parseFromString(text,'text/html');
+    /* ---- 1. full ApeiroCreate project embedded? restore everything ---- */
+    const pj=doc.getElementById('apeiro-project');
+    if(pj){
+      const d=JSON.parse(pj.textContent);
+      const remap={}; const nid=o=>remap[o]||o;
+      (d.elements||[]).forEach(e=>{ const old=e.id; e.id=uid('e'); remap[old]=e.id; S.elements.push(e); });
+      (d.rules||[]).forEach(r=>{ r.id=uid('r'); r.selector=String(r.selector||'').replace(/\[data-aid="([^"]+)"\]/g,(m,a)=>`[data-aid="${nid(a)}"]`); S.rules.push(r); });
+      const nmap={};
+      (d.nodes||[]).forEach(n=>{ const old=n.id; n.id=uid('n'); nmap[old]=n.id; if(n.data&&n.data.sel)n.data.sel=String(n.data.sel).replace(/\[data-aid="([^"]+)"\]/g,(m,a)=>`[data-aid="${nid(a)}"]`); S.nodes.push(n); });
+      (d.conns||[]).forEach(c=>{ if(!nmap[c.o[0]]||!nmap[c.i[0]])return; S.conns.push({id:uid('c'),o:[nmap[c.o[0]],c.o[1]],i:[nmap[c.i[0]],c.i[1]],kind:c.kind}); });
+      (d.vars||[]).forEach(v=>{ if(!S.vars.some(x=>x.name===v.name))S.vars.push(v); });
+      if(d.meta)Object.assign(S.meta,d.meta);
+      if(d.bg)S.bg=d.bg;
+      S.sel=null; renderStage(); renderRules(); applyCSS(); renderAllNodes(); layoutWires(); mountMeta(); save();
+      conLog('ok',`Imported project: ${(d.elements||[]).length} elements · ${(d.rules||[]).length} rules · ${(d.nodes||[]).length} nodes · ${(d.vars||[]).length} variables`);
+      toast(`Project restored — ${(d.nodes||[]).length} nodes included`,'file-down');
+      return;
+    }
+    /* ---- 2. plain HTML file ---- */
     const t=doc.querySelector('title'); if(t&&t.textContent.trim())S.meta.title=t.textContent.trim();
     const lang=doc.documentElement.getAttribute('lang'); if(lang)S.meta.lang=lang;
-    /* styles → rules */
+    const themeM=doc.querySelector('meta[name="theme-color"]'); if(themeM)S.meta.theme=themeM.content;
+    /* styles → rules (handles @media / @keyframes blocks too) */
     let added=0;
-    doc.querySelectorAll('style').forEach(st=>{
-      String(st.textContent||'').replace(/\/\*[\s\S]*?\*\//g,'').split('}').forEach(chunk=>{
+    const eatCSS=src=>{
+      let css=String(src||'').replace(/\/\*[\s\S]*?\*\//g,'');
+      /* pull out at-rules and keep them as raw single-declaration rules */
+      css=css.replace(/@(media|supports|keyframes|font-face)[^{]*\{(?:[^{}]*\{[^{}]*\}\s*)*\}/g,m=>{
+        const head=m.slice(0,m.indexOf('{')).trim();
+        const inner=m.slice(m.indexOf('{')+1,m.lastIndexOf('}'));
+        if(/^@(media|supports)/.test(head)){ eatCSS(inner); }         /* flatten media rules */
+        else { S.rules.push({id:uid('r'),selector:head,enabled:true,raw:m,decls:[]}); added++; }
+        return '';
+      });
+      css.split('}').forEach(chunk=>{
         const i=chunk.indexOf('{'); if(i<0)return;
         const selector=chunk.slice(0,i).trim(), body=chunk.slice(i+1);
         if(!selector||selector.startsWith('@'))return;
         const decls=body.split(';').map(d=>{ const j=d.indexOf(':'); return j<0?null:{prop:d.slice(0,j).trim(),val:d.slice(j+1).trim()}; }).filter(d=>d&&d.prop&&d.val);
         if(decls.length){ S.rules.push({id:uid('r'),selector,enabled:true,decls}); added++; }
       });
-    });
+    };
+    doc.querySelectorAll('style').forEach(st=>eatCSS(st.textContent));
     /* elements */
     const root=doc.querySelector('#stage')||doc.body;
     const SKIP=new Set(['SCRIPT','STYLE','LINK','META','TITLE','HEAD','BASE','NOSCRIPT']);
@@ -1072,8 +1465,10 @@ function importHTML(text,name){
     const bodyStyle=(doc.body.getAttribute('style')||'')+';'+((doc.querySelector('#stage')||{getAttribute(){return''}}).getAttribute('style')||'');
     const bg=/background(?:-color)?\s*:\s*([^;]+)/.exec(bodyStyle);
     if(bg)S.bg={kind:'css',val:bg[1].trim()};
-    S.sel=null; renderStage(); renderRules(); applyCSS(); mountMeta(); save();
+    S.sel=null; renderStage(); renderRules(); applyCSS(); renderAllNodes(); mountMeta(); save();
+    const scripts=[...doc.querySelectorAll('script')].filter(s=>!s.src&&s.textContent.trim().length>20).length;
     conLog('ok',`Imported ${name||'file'} — ${count} elements, ${added} CSS rules`);
+    if(scripts)conLog('warn',`${scripts} <script> block(s) were not converted to nodes. Only files exported by ApeiroCreate carry their node graph.`);
     toast(`Imported ${count} elements · ${added} rules`,'file-down');
   }catch(err){ conLog('error','Import failed: '+err.message); toast('Import failed — see console','alert-triangle'); }
 }
@@ -1116,11 +1511,11 @@ function openPixelTool(targetEl,dropPos){
       <div class="rounded-xl bg-black/40 border border-white/10 p-2 flex items-center justify-center min-h-[120px]"><canvas class="pixpre max-w-full max-h-[150px]" data-prev></canvas></div>
       <div class="field"><span>Image URL</span><div class="flex gap-1.5"><input class="inp" data-url value="${esc(PX.src)}"><button class="mbtn" data-load>Load</button></div></div>
       <div class="flex gap-1.5"><button class="mbtn flex-1" data-file><i data-lucide="upload" class="w-3.5 h-3.5"></i>Upload file</button><input type="file" accept="image/*" class="hidden" data-fin></div>
-      <div><div class="mcat !mt-0">Quality</div><div class="grid grid-cols-3 gap-1.5">
-        ${[[144,'144p · Low'],[240,'240p · Standard'],[360,'360p · High']].map(q=>`<button class="mbtn !text-[11px] ${PX.lines===q[0]?'on':''}" data-q="${q[0]}">${q[1]}</button>`).join('')}
+      <div><div class="mcat !mt-0">Quality</div><div class="grid grid-cols-5 gap-1">
+        ${[[144,'Low','144p'],[240,'Med','240p'],[360,'High','360p'],[480,'Extra','480p'],[720,'Max','720p']].map(q=>`<button class="mbtn !px-1 !text-[10.5px] flex-col !gap-0 ${PX.lines===q[0]?'on':''}" data-q="${q[0]}"><span class="font-bold">${q[1]}</span><span class="opacity-60 text-[9px]">${q[2]}</span></button>`).join('')}
       </div></div>
       <div class="grid grid-cols-2 gap-2">
-        <div class="field"><span>Pixel size</span><input type="range" min="1" max="16" value="${PX.block}" class="accent-[#ff8a3c]" data-block></div>
+        <div class="field"><span>Pixel size</span><input type="range" min="1" max="24" value="${PX.block}" class="accent-[#ff8a3c]" data-block></div>
         <div class="field"><span>Colors / channel</span><input type="range" min="2" max="16" value="${PX.levels}" class="accent-[#ff8a3c]" data-lv></div>
       </div>
       <div class="text-[10.5px] font-mono text-slate-500" data-info></div>
@@ -1472,11 +1867,11 @@ function openPalette(x,y,pos){
     const nCore=Object.values(NDEFS).filter(d=>d.cat!=='Incremental').length;
     const nInc=Object.values(NDEFS).filter(d=>d.cat==='Incremental').length;
     m.innerHTML=`<div class="menu-h"><i data-lucide="boxes" class="w-4 h-4 text-[#f5c542]"></i>Add Node<button class="ml-auto mbtn !p-1.5" data-x><i data-lucide="x" class="w-4 h-4"></i></button></div>
-    <div class="flex gap-1.5 px-3 pt-3">
-      <button class="mbtn flex-1 ${palTab==='nodes'?'on':''}" data-pt="nodes"><i data-lucide="boxes" class="w-3.5 h-3.5"></i>Nodes · ${nCore}</button>
-      <button class="mbtn flex-1 ${palTab==='inc'?'on':''}" data-pt="inc"><i data-lucide="trending-up" class="w-3.5 h-3.5"></i>Incremental Presets · ${nInc}</button>
+    <div class="mtabs">
+      <button class="mtab ${palTab==='nodes'?'on':''}" data-pt="nodes"><i data-lucide="boxes" class="w-3.5 h-3.5"></i>Nodes<span class="opacity-50">${nCore}</span></button>
+      <button class="mtab ${palTab==='inc'?'on':''}" data-pt="inc"><i data-lucide="trending-up" class="w-3.5 h-3.5"></i>Incremental<span class="opacity-50">${nInc}</span></button>
     </div>
-    <div class="px-3 pt-2"><div class="relative"><i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500"></i><input class="inp !pl-8" placeholder="Search nodes…" data-search></div></div>
+    <div class="msearch"><i data-lucide="search" class="w-4 h-4"></i><input class="inp" placeholder="Search nodes…" data-search></div>
     <div class="menu-b" data-list></div>`;
     const list=qs('[data-list]',m);
     const draw=(q='')=>{
@@ -1487,6 +1882,11 @@ function openPalette(x,y,pos){
           <div class="text-[10.5px] text-slate-500 leading-relaxed px-1 pb-2">Drop-in building blocks for clickers &amp; idle games. Every field on the node is editable.</div>
           <div class="igrid">${items.map(([k,d])=>`<button class="iitem" data-k="${k}"><i data-lucide="${d.icon}" style="color:${CATC.Incremental}"></i>${d.t}</button>`).join('')}</div>`);
       } else {
+        const fns=definedFns();
+        if(fns.length&&!q){
+          list.insertAdjacentHTML('beforeend',`<div class="mcat" style="color:${CATC.Functions}">Your Functions · quick call</div>
+            <div class="igrid">${fns.map(f=>`<button class="iitem" data-fn="${esc(f)}"><i data-lucide="play-circle" style="color:${CATC.Functions}"></i>${esc(f)}()</button>`).join('')}</div>`);
+        }
         for(const c of NCATS){
           if(c==='Incremental')continue;
           const items=Object.entries(NDEFS).filter(([k,d])=>d.cat===c&&(d.t.toLowerCase().includes(q)||k.includes(q)));
@@ -1495,10 +1895,11 @@ function openPalette(x,y,pos){
         }
       }
       qsa('[data-k]',list).forEach(b=>b.addEventListener('click',()=>{ addNode(b.dataset.k,pos.x,pos.y); closeMenu(); }));
+      qsa('[data-fn]',list).forEach(b=>b.addEventListener('click',()=>{ const nn=addNode('func-call',pos.x,pos.y); nn.data.name=b.dataset.fn; renderNode(nn); layoutWires(); save(); closeMenu(); toast('Call '+b.dataset.fn+'() added','play-circle'); }));
       icons();
     };
     const si=qs('[data-search]',m);
-    qsa('[data-pt]',m).forEach(b=>b.addEventListener('click',()=>{ palTab=b.dataset.pt; qsa('[data-pt]',m).forEach(o=>o.classList.toggle('on',o===b)); draw(si.value.toLowerCase()); }));
+    qsa('[data-pt]',m).forEach(b=>b.addEventListener('click',()=>{ palTab=b.dataset.pt; qsa('[data-pt]',m).forEach(o=>o.classList.toggle('on',o===b)); draw(si.value.toLowerCase()); qs('[data-list]',m).scrollTop=0; }));
     draw(); si.addEventListener('input',()=>draw(si.value.toLowerCase())); si.focus();
     qs('[data-x]',m).addEventListener('click',closeMenu);
   },x,y,370);
@@ -1571,8 +1972,9 @@ function startPick(cb,label){
   closeMenu(); setTab('html');
   let b=qs('#pickBar');
   if(!b){ b=document.createElement('div'); b.id='pickBar';
-    b.className='fixed left-1/2 -translate-x-1/2 top-[70px] z-[350] flex items-center gap-2.5 h-10 px-4 rounded-xl bg-[#ff8a3c] text-[#1a1006] text-[12.5px] font-bold shadow-2xl';
-    document.body.append(b); }
+    b.className='fixed left-1/2 -translate-x-1/2 z-[350] flex items-center gap-2.5 h-10 px-4 rounded-xl bg-[#ff8a3c] text-[#1a1006] text-[12.5px] font-bold shadow-2xl';
+    b.style.top='calc(70px + var(--sat))'; }
+  (typeof fsHost==='function'?fsHost():document.body).appendChild(b);
   b.innerHTML=`<i data-lucide="crosshair" class="w-4 h-4"></i>Click an element on the canvas${label?' for '+esc(label):''}<button class="ml-2 px-2 h-6 rounded-md bg-black/20 text-[11px]" data-cancel>Cancel · Esc</button>`;
   b.style.display='flex';
   b.querySelector('[data-cancel]').addEventListener('click',endPick);
@@ -1920,7 +2322,7 @@ function elHTML(e){
   return `  <${e.tag} ${attrs}>${esc(e.text)}</${e.tag}>`;
 }
 function genHTML(){
-  const L=['<!-- Exported from ApeiroCreate v1.0 -->',`<div id="stage" style="position:relative;width:100%;min-height:100vh;overflow:hidden;background:${S.bg.val}">`];
+  const L=['<!-- Exported from ApeiroCreate v1.0.1 -->',`<div id="stage" style="position:relative;width:100%;min-height:100vh;overflow:hidden;background:${S.bg.val}">`];
   for(const e of [...S.elements].sort((a,b)=>(a.z||0)-(b.z||0))) L.push(elHTML(e));
   L.push('</div>'); return L.join('\n');
 }
@@ -2008,7 +2410,7 @@ function genJS(){
     const raw=String(n.data.v??'0'); const lit=raw!==''&&!isNaN(+raw)?String(+raw):(raw==='true'||raw==='false')?raw:JSON.stringify(raw);
     decl.push(`state.${n.data.name} = ${lit};`);
   });
-  const L=['// Generated by ApeiroCreate v1.0','const state = {};','const $ = s => document.querySelectorAll("#stage " + s);','const fmt = (n,d=1)=>{const S=["","K","M","B","T","Qa","Qi"];let i=0;n=+n||0;const g=n<0?-1:1;n=Math.abs(n);while(n>=1000&&i<S.length-1){n/=1000;i++;}return (g<0?"-":"")+(+(n.toFixed(d))) + S[i];};','const beep = (f=660,t=90)=>{const A=new (window.AudioContext||window.webkitAudioContext)();const o=A.createOscillator(),g=A.createGain();o.frequency.value=f;o.connect(g);g.connect(A.destination);g.gain.setValueAtTime(.15,A.currentTime);g.gain.exponentialRampToValueAtTime(.001,A.currentTime+t/1000);o.start();o.stop(A.currentTime+t/1000);};',''];
+  const L=['// Generated by ApeiroCreate v1.0.1','const state = {};','const $ = s => document.querySelectorAll("#stage " + s);','const fmt = (n,d=1)=>{const S=["","K","M","B","T","Qa","Qi"];let i=0;n=+n||0;const g=n<0?-1:1;n=Math.abs(n);while(n>=1000&&i<S.length-1){n/=1000;i++;}return (g<0?"-":"")+(+(n.toFixed(d))) + S[i];};','const beep = (f=660,t=90)=>{const A=new (window.AudioContext||window.webkitAudioContext)();const o=A.createOscillator(),g=A.createGain();o.frequency.value=f;o.connect(g);g.connect(A.destination);g.gain.setValueAtTime(.15,A.currentTime);g.gain.exponentialRampToValueAtTime(.001,A.currentTime+t/1000);o.start();o.stop(A.currentTime+t/1000);};',''];
   if(decl.length)L.push('// --- variables ---',...decl,'');
   let any=false;
   for(const n of S.nodes){
@@ -2596,6 +2998,68 @@ mkV('online-status','Is Online','Utility','wifi',[],['result'],[],()=>`(navigato
 mkV('storage-size','Saved Data Size','Utility','database',[],['bytes'],[],()=>`(JSON.stringify(localStorage).length)`);
 mkB('safe-run','Try / Catch','Utility','shield-check',[],[],['try','on error'],(D,v,pad,n,ch)=>[`${pad}try {`,...ch('try'),`${pad}} catch(err){ console.error(err.message);`,...ch('on error'),`${pad}}`]);
 
+/* ================================================================
+   FUNCTIONS — define once, call anywhere
+================================================================ */
+CATC.Functions='#e11d48'; NCATS.splice(NCATS.indexOf('Utility'),0,'Functions');
+const fnName=s=>String(s||'myFunction').replace(/[^\w$]/g,'')||'myFunction';
+NDEFS['func-def']={t:'Define Function',cat:'Functions',icon:'square-function',exO:['body'],d:[
+  {k:'name',l:'function name',ty:'t',def:'doThing'},
+  {k:'p1',l:'input 1 → var',ty:'t',def:''},
+  {k:'p2',l:'input 2 → var',ty:'t',def:''}]};
+EVG['func-def']=(n,D)=>[`function fn_${fnName(D.name)}(_a, _b){`,
+  ...(D.p1?[`  state.${fnName(D.p1)} = _a;`]:[]),
+  ...(D.p2?[`  state.${fnName(D.p2)} = _b;`]:[]),
+  ...gChain(n,'body',1),`}`];
+mkA('func-call','Call Function','Functions','play-circle',[{k:'name',l:'function',ty:'t',def:'doThing'}],[{n:'input 1',def:0},{n:'input 2',def:0}],
+  (D,v,pad)=>`${pad}state.__ret = fn_${fnName(D.name)}(${v('input 1')}, ${v('input 2')});`);
+mkV('func-value','Call Function (value)','Functions','function-square',[{n:'input 1',def:0},{n:'input 2',def:0}],['result'],[{k:'name',l:'function',ty:'t',def:'doThing'}],
+  (D,v)=>`fn_${fnName(D.name)}(${v('input 1')}, ${v('input 2')})`);
+mkA('func-return','Return Value','Functions','corner-up-left',[],[{n:'value',def:0}],(D,v,pad)=>`${pad}return ${v('value')};`);
+mkV('func-result','Last Result','Functions','arrow-left-circle',[],['value'],[],()=>`(state.__ret||0)`);
+mkA('func-call-delay','Call Function Later','Functions','alarm-clock',[{k:'name',l:'function',ty:'t',def:'doThing'},{k:'ms',l:'after ms',ty:'n',def:500}],[{n:'input 1',def:0}],
+  (D,v,pad)=>`${pad}setTimeout(() => fn_${fnName(D.name)}(${v('input 1')}, 0), ${+D.ms||0});`);
+mkA('func-call-repeat','Call Function Repeatedly','Functions','repeat',[{k:'name',l:'function',ty:'t',def:'doThing'},{k:'ms',l:'every ms',ty:'n',def:1000}],[],
+  (D,v,pad)=>`${pad}setInterval(() => fn_${fnName(D.name)}(0, 0), ${Math.max(20,+D.ms||1000)});`);
+mkA('func-call-times','Call Function N Times','Functions','list-ordered',[{k:'name',l:'function',ty:'t',def:'doThing'},{k:'n',l:'times',ty:'n',def:3},{k:'gap',l:'gap ms',ty:'n',def:0}],[],
+  (D,v,pad)=>`${pad}for(let q = 0; q < ${+D.n||0}; q++) ${+D.gap>0?`setTimeout(() => fn_${fnName(D.name)}(q, 0), q * ${+D.gap})`:`fn_${fnName(D.name)}(q, 0)`};`);
+function definedFns(){ return S.nodes.filter(n=>n.type==='func-def'&&n.data.name).map(n=>fnName(n.data.name)); }
+
+/* ---------------- 20 MORE GENERAL NODES ---------------- */
+mkV('math-hypot','Hypotenuse','Math','triangle',[{n:'a',def:3},{n:'b',def:4}],['result'],[],(D,v)=>`Math.hypot(${v('a')}, ${v('b')})`);
+mkV('math-diff','Absolute Difference','Math','move-horizontal',[{n:'a',def:0},{n:'b',def:0}],['result'],[],(D,v)=>`Math.abs((${v('a')}) - (${v('b')}))`);
+mkV('math-ratio','Ratio a : b','Math','scale',[{n:'a',def:1},{n:'b',def:2}],['ratio'],[],(D,v)=>`((${v('a')}) / ((${v('b')})||1))`);
+mkV('text-count','Count Occurrences','Data','search',['text'],['count'],[{k:'find',l:'find',ty:'t',def:'a'}],(D,v)=>`(String(${v('text')}).split(${J(D.find)}).length - 1)`);
+mkV('text-initials','Initials','Data','case-upper',['text'],['text'],[],(D,v)=>`String(${v('text')}).split(/\\s+/).map(w => w[0]||"").join("").toUpperCase()`);
+mkV('text-truncate','Truncate With …','Data','more-horizontal',['text'],['text'],[{k:'len',l:'max chars',ty:'n',def:20}],(D,v)=>`(function(s){ s = String(s); return s.length > ${+D.len||0} ? s.slice(0, ${+D.len||0}) + "…" : s; })(${v('text')})`);
+mkV('list-index-of','Index Of Item','Data','search-code',['list',{n:'value',def:''}],['index'],[],(D,v)=>`(Array.isArray(${v('list')}) ? ${v('list')} : String(${v('list')}).split(",")).map(String).indexOf(String(${v('value')}))`);
+mkV('list-count','Count Matching','Data','tally-5',['list',{n:'value',def:''}],['count'],[],(D,v)=>`(Array.isArray(${v('list')}) ? ${v('list')} : String(${v('list')}).split(",")).filter(x => String(x) === String(${v('value')})).length`);
+mkA('sort-elements','Shuffle Elements','DOM','shuffle',[{k:'sel',l:'selector',ty:'t',def:'div'}],[],(D,v,pad)=>`${pad}$(${J(D.sel)}).forEach(el => { el.style.left = Math.random() * 80 + "%"; el.style.top = Math.random() * 80 + "%"; });`);
+mkA('align-elements','Align Elements','DOM','align-center',[{k:'sel',l:'selector',ty:'t',def:'div'},{k:'axis',l:'align',ty:'sel',opts:['left','center x','right','top','middle y','bottom'],def:'center x'},{k:'pad',l:'padding px',ty:'n',def:20}],[],
+  (D,v,pad)=>`${pad}{ const st = document.getElementById("stage"), W = st.clientWidth, H = st.clientHeight;
+${pad}  $(${J(D.sel)}).forEach(el => { ${({'left':'el.style.left = P + "px";','center x':'el.style.left = (W - el.offsetWidth)/2 + "px";','right':'el.style.left = (W - el.offsetWidth - P) + "px";','top':'el.style.top = P + "px";','middle y':'el.style.top = (H - el.offsetHeight)/2 + "px";','bottom':'el.style.top = (H - el.offsetHeight - P) + "px";'})[D.axis].replace(/P/g,String(+D.pad||0))} }); }`);
+mkA('stack-elements','Stack Vertically','DOM','rows-3',[{k:'sel',l:'selector',ty:'t',def:'div'},{k:'x',l:'x',ty:'n',def:40},{k:'y',l:'start y',ty:'n',def:40},{k:'gap',l:'gap px',ty:'n',def:12}],[],
+  (D,v,pad)=>`${pad}{ let yy = ${+D.y||0}; $(${J(D.sel)}).forEach(el => { el.style.left = ${+D.x||0} + "px"; el.style.top = yy + "px"; yy += el.offsetHeight + ${+D.gap||0}; }); }`);
+mkA('style-all','Style Every Match','DOM','brush',[{k:'sel',l:'selector',ty:'t',def:'div'},{k:'css',l:'inline css',ty:'t',def:'border-radius:12px'}],[],(D,v,pad)=>`${pad}$(${J(D.sel)}).forEach(el => el.style.cssText += ";" + ${J(D.css)});`);
+mkB('if-visible','If Element Visible','Logic','eye',[{k:'sel',l:'selector',ty:'t',def:'div'}],[],['visible','hidden'],(D,v,pad,n,ch)=>[`${pad}if((($(${J(D.sel)})[0]||{}).offsetParent) !== null){`,...ch('visible'),`${pad}} else {`,...ch('hidden'),`${pad}}`]);
+mkB('if-exists','If Element Exists','Logic','search-check',[{k:'sel',l:'selector',ty:'t',def:'#panel'}],[],['yes','no'],(D,v,pad,n,ch)=>[`${pad}if($(${J(D.sel)}).length){`,...ch('yes'),`${pad}} else {`,...ch('no'),`${pad}}`]);
+mkB('if-mobile','If Mobile Device','Logic','smartphone',[],[],['mobile','desktop'],(D,v,pad,n,ch)=>[`${pad}if(/Mobi|Android|iPhone|iPad/.test(navigator.userAgent)){`,...ch('mobile'),`${pad}} else {`,...ch('desktop'),`${pad}}`]);
+mkA('toast-msg','Show Toast Message','Actions','message-square',[{k:'pos',l:'position',ty:'sel',opts:['top','bottom'],def:'bottom'},{k:'ms',l:'duration ms',ty:'n',def:1800},{k:'bg',l:'background',ty:'t',def:'#10141c'},{k:'fg',l:'text colour',ty:'t',def:'#ffffff'}],[{n:'text',def:'Hello!'}],
+  (D,v,pad)=>`${pad}{ const d = document.createElement("div"); d.textContent = String(${v('text')});
+${pad}  d.style.cssText = "position:absolute;left:50%;transform:translateX(-50%);${D.pos==='top'?'top:18px':'bottom:18px'};padding:10px 16px;border-radius:12px;font:600 14px sans-serif;z-index:99999;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.35);background:" + ${J(D.bg)} + ";color:" + ${J(D.fg)};
+${pad}  document.getElementById("stage").appendChild(d);
+${pad}  d.animate([{opacity:0,transform:"translateX(-50%) translateY(8px)"},{opacity:1,transform:"translateX(-50%) translateY(0)"}],{duration:200});
+${pad}  setTimeout(() => { d.animate([{opacity:1},{opacity:0}],{duration:250}).onfinish = () => d.remove(); }, ${+D.ms||1800}); }`);
+mkA('set-progress-bar','Fill Progress From Vars','Animation','loader',[{k:'sel',l:'bar selector',ty:'t',def:'#bar'},{k:'cur',l:'current var',ty:'t',def:'coins'},{k:'max',l:'max var / number',ty:'t',def:'100'}],[],
+  (D,v,pad)=>`${pad}{ const mx = ${isNaN(+D.max)?`(state.${fnName(D.max)}||1)`:(+D.max||1)}; const pc = Math.max(0, Math.min(100, (state.${D.cur}||0) / mx * 100));
+${pad}  $(${J(D.sel)}).forEach(el => { el.style.width = pc + "%"; if(el.tagName === "PROGRESS") el.value = pc; }); }`);
+mkE('on-two-keys','On Key Combo','Events','keyboard',[{k:'mod',l:'modifier',ty:'sel',opts:['ctrl','shift','alt','meta'],def:'ctrl'},{k:'key',l:'key',ty:'t',def:'s'}],[],
+  (n,D)=>[`window.addEventListener("keydown", e => { if(!e.${D.mod}Key || e.key.toLowerCase() !== ${J(String(D.key||'').toLowerCase())}) return; e.preventDefault();`,...gChain(n,'then',1),`});`]);
+mkV('random-from','Random Between (value)','Math','dices',[{n:'min',def:0},{n:'max',def:10}],['value'],[{k:'int',l:'integer',ty:'sel',opts:['yes','no'],def:'no'}],(D,v)=>`${D.int==='yes'?'Math.round':''}((${v('min')}) + Math.random() * ((${v('max')}) - (${v('min')})))`);
+mkV('color-mix','Blend Two Colours','Data','palette',[{n:'amount',def:.5}],['color'],[{k:'a',l:'colour A',ty:'t',def:'#ff8a3c'},{k:'b',l:'colour B',ty:'t',def:'#5b9dff'}],
+  (D,v)=>`(function(t){ const p = c => [1,3,5].map(i => parseInt(c.substr(i,2),16)); const A = p(${J(D.a)}), B = p(${J(D.b)});
+    return "#" + A.map((x,i) => Math.round(x + (B[i]-x)*t).toString(16).padStart(2,"0")).join(""); })(Math.max(0,Math.min(1,${v('amount')})))`);
+
 /* branch-node hook into the code generator */
 const gStmtPrevB=gStmt;
 gStmt=function(n,ind,seen){
@@ -2656,6 +3120,7 @@ ${genCSS().split('\n').map(l=>'  '+l).join('\n')}
 </head>
 <body>
 ${genHTML()}
+${design?'':`<script type="application/json" id="apeiro-project">${JSON.stringify({v:'1.0.1',elements:S.elements,rules:S.rules,nodes:S.nodes,conns:S.conns,vars:S.vars,meta:S.meta,bg:S.bg}).replace(/</g,'\\u003c')}<\/script>`}
 ${design?'':`<script>
   (function(){
 ${helpers}
@@ -2700,8 +3165,8 @@ qs('#clearBtn').addEventListener('click',()=>showConfirm('Erase absolutely every
   S.meta={title:'ApeiroCreate Project',icon:'',lang:'en',theme:'#0b0e14'}; mountMeta();
   PX.lines=240; PX.block=4; PX.levels=6; PX.src='https://picsum.photos/seed/apeiro/640/400'; PX.out=null;
   /* wipe storage (project + any game saves) */
-  try{ localStorage.removeItem('apeiro_v1'); Object.keys(localStorage).filter(k=>k.startsWith('apeiro_')).forEach(k=>localStorage.removeItem(k)); }catch(e){}
-  clearTimeout(saveT);
+  try{ Object.keys(localStorage).filter(k=>k.startsWith('apeiro')).forEach(k=>localStorage.removeItem(k)); }catch(e){}
+  clearTimeout(saveT); saveT=null; lastGood=''; loadedOK=true;
   /* wipe console, preview, menus, modals */
   CON.rows=[]; CON.errors=0; CON.errOnly=false; conRender(); conToggle(false);
   qs('#previewTag').classList.add('hidden'); qs('#designTag').classList.remove('hidden'); ovl.innerHTML='';
@@ -2722,7 +3187,7 @@ qs('#helpBtn').addEventListener('click',e=>openMenu(m=>{
     <div class="mcat !mt-0" style="color:#ff8a3c">HTML canvas</div>
     <p>• <b>Hold-click / long-press</b> (or right-click) empty canvas → <b>insert menu</b> with elements, forms, media &amp; background colors.</p>
     <p>• <b>Hold-click an element</b> (or double-click) → <b>customize</b> content, 9-point position, size, rotation, fonts &amp; styles.</p>
-    <p>• Drag elements to move · corner dot to resize · <span class="kbd">Del</span> to remove the selection.</p>
+    <p>• Drag elements to move · corner dot to resize · <b>blue circle above the selection to rotate</b> (hold <span class="kbd">Shift</span> to snap 15°, double-tap it to reset) · <span class="kbd">Del</span> to remove.</p>
     <p>• Elements insert <b>completely unstyled</b> — style them in the customize menu's <b>Quick CSS</b> box (any property) or in the CSS tab.</p>
     <p>• Images: use <b>Pixel Art Recreator</b> (144p / 240p / 360p) to rebuild any picture as pixel art.</p>
     <div class="mcat" style="color:#5b9dff">CSS rules</div>
@@ -2731,7 +3196,8 @@ qs('#helpBtn').addEventListener('click',e=>openMenu(m=>{
     <p>• <b>Import</b> in the top bar loads an existing <b>.html</b> file — elements, inline styles, &lt;style&gt; rules, title and background all come in.</p>
     <p>• The canvas is a live render of your <b>real generated index.html</b> — pressing Run only adds the behaviour script, so nothing shifts or changes appearance.</p>
     <div class="mcat" style="color:#d9a520">JS nodes</div>
-    <p>• The palette has two tabs: <b>Nodes</b> (events, data, math, logic, DOM, animation…) and <b>Incremental Presets</b> (idle/clicker building blocks).</p>
+    <p>• The palette has two tabs: <b>Nodes</b> (events, data, math, logic, DOM, animation, timing, utility, <b>functions</b>…) and <b>Incremental Presets</b> (idle/clicker building blocks).</p>
+    <p>• <b>Functions:</b> drop <b>Define Function</b>, wire your logic to its <i>body</i>, then call it anywhere — defined functions appear at the top of the palette for <b>quick calling</b>, plus Call Later / Repeatedly / N Times and Return Value.</p>
     <p>• <b>Variables:</b> click <span class="kbd">Variables</span> in the JS toolbar to declare them (name · type · value), or drop a <b>Create Variable</b> node. Read/write with Get &amp; Set Variable — name fields autocomplete.</p>
     <p>• Any node field labelled <b>selector</b> has a <i data-lucide="crosshair" class="w-3 h-3 inline"></i> button: press it, then click the element on the canvas to fill the selector automatically.</p>
     <p>• <b>Double-click</b> empty space → palette with 30+ nodes (events, math, logic, actions and <b>incremental-game nodes</b>: Click to Earn, Auto Income, Buy Upgrade, Cost Formula, Prestige, Number Format…).</p>
@@ -2741,7 +3207,19 @@ qs('#helpBtn').addEventListener('click',e=>openMenu(m=>{
     <p>• <b>Run</b> compiles your project into the real single-file <span class="font-mono">index.html</span> and runs <b>that exact code</b> in the preview — what you see is literally the exported file, nothing faked.</p>
     <p>• Preview errors and logs stream into the <b>Console</b> drawer. <b>View Source</b> shows the same file and can download it.</p>
     <p>• <b>Clear</b> erases everything: elements, rules, nodes, wires, saves, console, tool settings.</p>
+    <div class="mcat">Safety</div>
+    <p>Your work autosaves to three rotating slots (live · backup · hourly snapshot) and is flushed whenever you leave the page. If a save is ever damaged, the next launch restores the newest healthy copy automatically.</p>
+    <button class="mbtn w-full" data-restore><i data-lucide="history" class="w-4 h-4"></i>Restore last backup now</button>
   </div>`;
+  m.querySelector('[data-restore]').addEventListener('click',()=>{
+    try{
+      const raw=localStorage.getItem(KEY_BAK)||localStorage.getItem(KEY_SNAP);
+      if(!raw){ toast('No backup available yet','alert-triangle'); return; }
+      const d=migrate(JSON.parse(raw)); if(!d)throw new Error('unreadable');
+      applyLoaded(d); renderStage(); renderRules(); applyCSS(); renderAllNodes(); layoutWires(); mountMeta(); mountGrid(qs('#gridBox')); saveNow();
+      closeMenu(); toast('Backup restored','history'); conLog('ok','Restored project from backup slot.');
+    }catch(err){ conLog('error','Restore failed: '+err.message); toast('Restore failed','x'); }
+  });
   m.querySelector('[data-x]').addEventListener('click',closeMenu);
 },e.clientX-150,Math.min(e.clientY+20,innerHeight-60),360));
 
@@ -2751,7 +3229,7 @@ qs('#helpBtn').addEventListener('click',e=>openMenu(m=>{
 (function boot(){
   const had=load();   /* nothing is seeded — the workspace starts completely empty */
   renderStage(); renderRules(); renderAllNodes(); applyPan(); mountMeta(); setTab('html'); runUpdateBtns(); icons();
-  conLog('info','ApeiroCreate v1.0 ready — blank workspace, no preset content.');
+  conLog('info','ApeiroCreate v1.0.1 ready — blank workspace, no preset content.');
   setTimeout(()=>{ if(!had)toast('Hold-tap the canvas to insert your first element','sparkles'); },600);
 })();
 </script>
